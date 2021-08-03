@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">RealEstateManager</string>
+    <string name="find_house">Find a house in</string>
+    <string name="near_you">Near You</string>
+    <string name="per_month">/month</string>
+    <string name="from_you">km from you</string>
+    <string name="calcul_month_payement">Calculating your monthly mortgage payments</string>
+    <string name="amount_loan">Amount of your loan : </string>
+    <string name="duration_loan">Duration of your loan : </string>
+    <string name="interest_rate">Interest rates :</string>
+    <string name="amount_contribution">amount of the contribution :</string>
+    <string name="montly_paement">Your monthly payment will be</string>
+</resources>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:paddingHorizontal="20dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/backButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="20dp"
+        android:src="@drawable/baseline_keyboard_arrow_down_white_36"
+        android:background="@drawable/round_corner_black_10"
+        android:rotation="90"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/calcul_month_payement"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textAlignment="center"
+        android:fontFamily="@font/poppins_semi_bold"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/amount_loan"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_medium"
+        android:textSize="16sp" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider_amount_Loan"
+        android:layout_width="match_parent"
+        app:thumbColor="@color/red"
+        app:trackColorActive="@color/red"
+        android:value="208000"
+        android:valueFrom="0"
+        android:outlineSpotShadowColor="@color/opacity_red"
+        android:stepSize="1000"
+        android:valueTo="600000"
+        app:trackColorInactive="@color/opacity_red"
+        android:layout_height="wrap_content"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/duration_loan"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_medium"
+        android:textSize="16sp" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider_duration_Loan"
+        android:layout_width="match_parent"
+        android:valueFrom="2"
+        android:valueTo="30"
+        android:value="15"
+        android:outlineSpotShadowColor="@color/opacity_red"
+        android:stepSize="1"
+        app:thumbColor="@color/red"
+        app:trackColorActive="@color/red"
+        app:trackColorInactive="@color/opacity_red"
+        android:layout_height="wrap_content"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/amount_contribution"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/contribution_edit"
+            android:layout_width="match_parent"
+            android:layout_marginStart="10dp"
+            android:hint="20000"
+            android:textColorHint="@color/opacity_red"
+            android:layout_marginEnd="30dp"
+            android:inputType="number"
+            android:backgroundTint="@color/red"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/interest_rate"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/interest_edit"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="10dp"
+            android:hint="0.84"
+            android:textColorHint="@color/opacity_red"
+            android:inputType="numberDecimal"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/red"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:text="%"
+            android:fontFamily="@font/poppins_semi_bold"/>
+    </LinearLayout>
+
+    <TextView
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/montly_paement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_bold"
+            android:id="@+id/monthly_payment"
+            android:textSize="22sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:fontFamily="@font/poppins_semi_bold"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_gravity="bottom"
+            android:text="@string/per_month"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
