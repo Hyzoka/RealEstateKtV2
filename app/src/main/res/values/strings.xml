@@ -10,4 +10,5 @@
     <string name="interest_rate">Interest rates :</string>
     <string name="amount_contribution">amount of the contribution :</string>
     <string name="montly_paement">Your monthly payment will be</string>
+    <string name="check_availabilities">Check Availability</string>
 </resources>

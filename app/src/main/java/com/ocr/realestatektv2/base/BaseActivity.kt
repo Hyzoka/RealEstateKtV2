@@ -138,7 +138,6 @@ open class BaseActivity: AppCompatActivity(), NetworkStateReceiverListener {
         gMap.addMarker(MarkerOptions().position(latlng))
         gMap.moveCamera(cu)
     }
-
     companion object {
         private const val DEFAULT_ZOOM = 15
         private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1

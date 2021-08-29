@@ -5,6 +5,9 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.net.wifi.WifiManager
 import android.util.Log
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -64,5 +67,14 @@ object Utils {
 
         return  totalWithTaux/convertYearToMonth(duree)
 
+    }
+
+    fun subscribeOnBackground(function: () -> Unit) {
+        Single.fromCallable {
+            function()
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
     }
 }
