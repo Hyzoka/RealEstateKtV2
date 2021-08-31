@@ -21,6 +21,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.OnSuccessListener
+import com.ocr.realestatektv2.database.EstateRoomDatabase
 import com.ocr.realestatektv2.util.NetworkStateReceiverListener
 import com.ocr.realestatektv2.util.Utils
 
@@ -138,9 +139,12 @@ open class BaseActivity: AppCompatActivity(), NetworkStateReceiverListener {
         gMap.addMarker(MarkerOptions().position(latlng))
         gMap.moveCamera(cu)
     }
-
     companion object {
         private const val DEFAULT_ZOOM = 15
         private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
+    }
+
+    interface Callback {
+        fun call()
     }
 }
