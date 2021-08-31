@@ -14,7 +14,7 @@ interface EstateDao {
     fun loadAllByIds(estateId: IntArray): LiveData<List<Estate>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(skiResortList: List<Estate>)
+    fun insert(vararg directors: Estate)
 
     @Update
     fun update(vararg estate: Estate)

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- VOICE -->
+    <declare-styleable name="Voice">
+        <attr name="title_text" format="string" />
+        <attr name="animated" format="boolean" />
+        <attr name="steps" format="integer" />
+    </declare-styleable>
+
+
+    <!-- TOPBAR -->
+    <declare-styleable name="TopBarBack">
+        <attr name="info_text" format="string" />
+    </declare-styleable>
+
+    <!-- INPUT TEXT -->
+    <declare-styleable name="InputText">
+        <attr name="hint" format="string" />
+    </declare-styleable>
+
+    <!-- PRIMARY BUTTON -->
+    <declare-styleable name="PrimaryButton">
+        <attr name="button_text" format="string" />
+        <attr name="step_title" format="string" />
+        <attr name="android:enabled" format="boolean" />
+    </declare-styleable>
+
+    <!-- InputTextView -->
+    <declare-styleable name="InputTextView">
+        <attr name="hint_text_view" format="string" />
+    </declare-styleable>
+
+</resources>

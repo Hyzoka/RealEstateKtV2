@@ -7,16 +7,30 @@
     android:paddingHorizontal="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:elevation="4dp"
+            android:background="@drawable/round_corner_withe_10"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
     <ImageView
         android:id="@+id/imgEstate"
+        android:src="@drawable/baseline_location_on_black_48"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ccEstate"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginVertical="10dp"
         android:id="@+id/ccEstate"
-        app:layout_constraintTop_toBottomOf="@+id/imgEstate"
+        app:layout_constraintBottom_toTopOf="@+id/rvEstate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -75,13 +89,14 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvEstate"
         android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/ccEstate"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCheckEstate"
         android:layout_width="match_parent"
+        android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:id="@+id/buttonCheckEstate"
-        app:layout_constraintTop_toBottomOf="@+id/rvEstate"
+    app:layout_constraintBottom_toBottomOf="parent"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:background="@drawable/round_corner_red_10"
@@ -91,7 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:fontFamily="@font/poppins_bold"
             android:textAlignment="center"
             android:paddingHorizontal="20dp"
@@ -99,5 +114,8 @@
             android:text="@string/check_availabilities"/>
     </LinearLayout>
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

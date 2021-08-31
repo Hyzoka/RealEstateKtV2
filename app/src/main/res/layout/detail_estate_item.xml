@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="6dp"
+        android:layout_marginVertical="10dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_corners_26_white"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/emojiTv"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:textColor="@color/light_grey"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/valuesTV"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:fontFamily="@font/poppins_medium_italic"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
