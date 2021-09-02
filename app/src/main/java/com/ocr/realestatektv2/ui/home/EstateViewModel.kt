@@ -11,8 +11,11 @@ class EstateViewModel (application: Application) : AndroidViewModel(application)
 
     private val estateDao: EstateDao = EstateRoomDatabase.getDatabase(application).estateDao()
 
-    val moviesList: LiveData<List<Estate>> = estateDao.getAllEstate()
+    val estateList: LiveData<List<Estate>> = estateDao.getAllEstate()
 
+    fun getEstateById(id : Int) : Estate{
+        return  estateDao.getEstateById(id)
+    }
     suspend fun insert(vararg estate: Estate) {
         estateDao.insert(*estate)
     }

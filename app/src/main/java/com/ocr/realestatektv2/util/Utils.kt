@@ -107,9 +107,9 @@ object Utils {
                 var pictureEstate = PictureEstate(1,"Facade","https://images.unsplash.com/photo-1599809275671-b5942cabc7a2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60")
                 val pictureEstateList = arrayListOf<PictureEstate>(pictureEstate)
                 val movieOne = Estate(1,"Appart","50","3","1","1","blablablablalb","https://images.unsplash.com/photo-1599809275671-b5942cabc7a2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60","3, boulevard Fontaine, RiouVille","ecole, commerce","Vendu","20/08/2021","29/08/2021","Mme Ravière","88000")
-                val movieTwo = Estate(2,"Maison","123","5","2","1","blalbalbalblabla","https://images.unsplash.com/photo-1599809275671-b5942cabc7a2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60","","","","","","","")
-                val movieThree = Estate(3,"Maison","168","7","4","2","blalbalblablalb","pictureEstate","","","","","","","")
-                val movieFour = Estate(4,"Villa","352","12","5","3","blalbalblabllb","pictureEstate","","","","","","","")
+                val movieTwo = Estate(2,"Maison","123","5","2","1","blalbalbalblabla","https://images.unsplash.com/photo-1599809275671-b5942cabc7a2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60","3, boulevard Fontaine, RiouVille","ecole, commerce","Vendu","20/08/2021","29/08/2021","Mme Ravière","88000")
+                val movieThree = Estate(3,"Maison","168","7","4","2","blalbalblablalb","https://images.unsplash.com/photo-1599809275671-b5942cabc7a2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60","3, boulevard Fontaine, RiouVille","ecole, commerce","Vendu","20/08/2021","29/08/2021","Mme Ravière","88000")
+                val movieFour = Estate(4,"Villa","352","12","5","3","blalbalblabllb","https://images.unsplash.com/photo-1599809275671-b5942cabc7a2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60","3, boulevard Fontaine, RiouVille","ecole, commerce","Vendu","20/08/2021","29/08/2021","Mme Ravière","88000")
                 movieDao.insert(movieFour,movieOne,movieTwo,movieThree)
             }
         }

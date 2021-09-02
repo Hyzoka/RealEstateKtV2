@@ -1,7 +1,7 @@
 package com.ocr.realestatektv2.ui.home
 
 import android.content.Context
-import android.media.Image
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,27 +9,31 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.DialogFragment
-import androidx.recyclerview.widget.DiffUtil
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.request.RequestOptions
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.ocr.realestatektv2.R
 import com.ocr.realestatektv2.model.Estate
 import com.ocr.realestatektv2.model.EstateDetail
+import com.ocr.realestatektv2.ui.detail.DetailActivity
+import com.ocr.realestatektv2.util.ESTATE
 import com.ocr.realestatektv2.util.Utils.load
+import kotlinx.android.synthetic.main.estate_item_list.view.*
+
 
 class EstateAdapter(context: Context) : RecyclerView.Adapter<EstateAdapter.EstateViewHolder>() {
 
     private var estateList: List<Estate>? = null
     private var simpleList: List<EstateDetail>? = null
+    private lateinit var estate: Estate
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
     private val simpleAdapter = FastItemAdapter<IItem<*, *>>()
 
-    fun setMovieList(movieList: List<Estate>?) {
+    fun setEstateList(movieList: List<Estate>?) {
         this.estateList = movieList
         notifyDataSetChanged()
     }
@@ -47,31 +51,44 @@ class EstateAdapter(context: Context) : RecyclerView.Adapter<EstateAdapter.Estat
 
     override fun onBindViewHolder(holder: EstateViewHolder, position: Int) {
         estateList?.let { list ->
-            val estate = list[position]
-            var detailRoom = EstateDetail("🏠",estate.nbrRoom)
-            var detailBed = EstateDetail("🛏",estate.nbrBedRoom)
-            var detailBath = EstateDetail("🛀",estate.nbrBathRoom)
-            var detailSurface = EstateDetail("🔛",estate.surface + "m2")
-            var detailStatus = EstateDetail("💵",estate.status)
-            simpleList = listOf(detailRoom,detailBed,detailBath,detailSurface,detailStatus)
+             estate = list[position]
+            var detailRoom = EstateDetail("🏠", estate.nbrRoom)
+            var detailBed = EstateDetail("🛏", estate.nbrBedRoom)
+            var detailBath = EstateDetail("🛀", estate.nbrBathRoom)
+            var detailSurface = EstateDetail("🔛", estate.surface + "m2")
+            var detailStatus = EstateDetail("💵", estate.status)
+            simpleList = listOf(detailRoom, detailBed, detailBath, detailSurface, detailStatus)
             initSimpleAdapter()
             holder.titleEstate.text = estate.typeEstate
             holder.priceEstate.text = "$" + estate.price
             holder.distanceEstate.text = estate.addresse
-            holder.imgEstate.load(estate.picture)
+            holder.imgEstate.load(estate.picture, RequestOptions.centerCropTransform())
 
 
-            holder.rvEstate.layoutManager = LinearLayoutManager(holder.itemView.context,LinearLayoutManager.HORIZONTAL, false)
+            holder.rvEstate.layoutManager = LinearLayoutManager(
+                holder.itemView.context,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
             holder.rvEstate.adapter = simpleAdapter
 
-//                holder.itemView.setOnClickListener {
-//                    val dialogFragment: DialogFragment = newInstance(movie.title, directorFullName)
-//                    dialogFragment.setTargetFragment(parent, 99)
-//                    dialogFragment.show(
-//                        (parent.activity as AppCompatActivity).supportFragmentManager,
-//                        MovieSaveDialogFragment.TAG_DIALOG_MOVIE_SAVE
-//                    )
-//                }
+            holder.buttonCheckEstate.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putInt(ESTATE, position + 1)
+                val fragobj = DetailActivity()
+                fragobj.arguments = bundle
+                fragobj.let { fragment ->
+                    val transaction = (holder.itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                    transaction.setCustomAnimations(
+                        R.anim.slide_in,
+                        R.anim.fade_out,
+                        R.anim.slide_in,
+                        R.anim.fade_out
+                    )
+                        .replace(R.id.details_fragment, fragment)
+                        .commit();
+                }
+            }
         }
     }
 

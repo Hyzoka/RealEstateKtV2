@@ -14,7 +14,7 @@ import com.ocr.realestatektv2.addestate.picture.EstatePcitureFragment
 import com.ocr.realestatektv2.addestate.price.EstatePriceSizeFragment
 import com.ocr.realestatektv2.addestate.rooms.EstateRoomsFragment
 import com.ocr.realestatektv2.addestate.type.EstateTypeFragment
-import com.ocr.realestatektv2.base.HeroesBaseActivity
+import com.ocr.realestatektv2.base.EstateBaseActivity
 import com.ocr.realestatektv2.model.PictureEstate
 import com.ocr.realestatektv2.ui.home.MainActivity
 import com.ocr.realestatektv2.util.DialogUtils.getDefaultPopUp
@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_add_estate.*
 import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-class AddEstateFlow : HeroesBaseActivity<AddEstateFlowViewModel>(), ComponentListener {
+class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentListener {
 
     private var listPicture = arrayListOf<PictureEstate>()
 
@@ -243,19 +243,11 @@ class AddEstateFlow : HeroesBaseActivity<AddEstateFlowViewModel>(), ComponentLis
         voice.nextStep()
     }
 
+    override fun updateData() {
+    }
+
     private fun lastStep() {
             startActivity<MainActivity>()
         finish()
     }
-
-
-//    pict?.load(
-//    imagePath,
-//    RequestOptions().transform(
-//    MultiTransformation(
-//    CenterCrop(),
-//    RoundedCorners(Utils.dpToPx(26f).toInt())
-//    )
-//    )
-//    )
 }

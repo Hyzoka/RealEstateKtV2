@@ -15,11 +15,12 @@ class MapsActivity : BaseActivity() {
     private lateinit var backButton : ImageView
 
     private val callback = OnMapReadyCallback { googleMap ->
-        if (lastKnownLocation != null){
+        if (lastKnownLocation != null) {
+            map = googleMap
             moveMap(googleMap, lastKnownLocation!!.latitude, lastKnownLocation!!.longitude)
         }
         else{
-            moveMap(googleMap,-34.0, 151.0) // <- sydney location
+            moveMap(googleMap, 34.003342, -118.485832) // <- Los Angeles location
         }
     }
 
@@ -32,6 +33,7 @@ class MapsActivity : BaseActivity() {
         // Get the SupportMapFragment and request notification when the map is ready to be used.
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
         mapFragment?.getMapAsync(callback)
+
     }
 
 

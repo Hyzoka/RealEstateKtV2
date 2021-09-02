@@ -33,4 +33,7 @@ class EstateDateFragment : BaseComponentFragment<EstateDateViewModel>() {
 
     override fun setupViewModel() {
     }
+
+    override fun createView() {
+    }
 }

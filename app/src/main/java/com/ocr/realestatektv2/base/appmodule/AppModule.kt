@@ -1,4 +1,4 @@
-package com.ocr.realestatektv2.addestate.appmodule
+package com.ocr.realestatektv2.base.appmodule
 
 import com.ocr.realestatektv2.addestate.AddEstateFlowViewModel
 import com.ocr.realestatektv2.addestate.address.EstateAddressViewModel
@@ -9,6 +9,7 @@ import com.ocr.realestatektv2.addestate.picture.EstatePictureViewModel
 import com.ocr.realestatektv2.addestate.price.EstatePriceSizeViewModel
 import com.ocr.realestatektv2.addestate.type.EstateTypeViewModel
 import com.ocr.realestatektv2.base.BaseViewModel
+import com.ocr.realestatektv2.ui.detail.DetailViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -23,5 +24,6 @@ import org.koin.dsl.module
         viewModel { EstateDateViewModel() }
         viewModel { EstateAgentViewModel() }
         viewModel { AddEstateFlowViewModel() }
+        viewModel { DetailViewModel() }
 
 }
