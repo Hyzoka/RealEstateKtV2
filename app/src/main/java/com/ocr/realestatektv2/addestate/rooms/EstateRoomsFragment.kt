@@ -22,7 +22,7 @@ class EstateRoomsFragment  : BaseComponentFragment<EstatePriceSizeViewModel>() {
 
         continueButton.setButtonListener {
             if (continueButton.isActive) {
-                listener.onNext()
+                listener.onNext(arrayListOf(first_input.text.text.toString(),second_input.text.text.toString(),three_input.text.text.toString()))
             }
         }
 

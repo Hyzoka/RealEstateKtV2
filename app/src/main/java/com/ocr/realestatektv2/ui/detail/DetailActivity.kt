@@ -26,10 +26,9 @@ class DetailActivity  : EstateBaseActivity<DetailViewModel>(){
 
     private var simpleList: List<EstateDetail>? = null
     private val simpleAdapter = FastItemAdapter<IItem<*, *>>()
+
     private var pictureList: List<String>? = null
     private val pictureAdapter = FastItemAdapter<IItem<*, *>>()
-    private var recyclerViewSimple: RecyclerView? = null
-    private var recyclerViewPicture: RecyclerView? = null
 
 
     override fun viewModel(): DetailViewModel {
@@ -37,27 +36,43 @@ class DetailActivity  : EstateBaseActivity<DetailViewModel>(){
     }
 
     override fun setupViewModel() {
+        val data = intent.getIntExtra(ESTATE,2)
+        estateViewModel.estateList.observe(this,
+            Observer { estate: List<Estate> ->
+                setData(estate[data - 1])
+            })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detail_activity)
 
-        val data = intent.getIntExtra(ESTATE,2)
-        estateViewModel.estateList.observe(this,
-            Observer { estate: List<Estate> ->
-                setData(estate[data - 1])
-            })
+        setupListEstate()
+        setupListPicture()
         setupListener()
     }
 
-    private fun setupListener(){}
+    private fun setupListener(){
+        back.setOnClickListener {
+            finish()
+        }
+    }
+
+    private fun setupListEstate(){
+        rvEstate.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rvEstate.adapter = simpleAdapter
+    }
+
+    private fun setupListPicture(){
+        rvPictureEstate.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rvPictureEstate.adapter = pictureAdapter
+    }
 
     private fun setData(data: Estate){
 
         imgEstate.load(data.picture, RequestOptions.centerCropTransform())
         titleEstate.text = data.typeEstate
-        priceEstate.text = "$$data.price"
+        priceEstate.text = "$${data.price}"
         distanceEstate.text = data.addresse
         descEstate.text = data.description
 
@@ -68,14 +83,8 @@ class DetailActivity  : EstateBaseActivity<DetailViewModel>(){
         var detailSurface = EstateDetail("🔛", data.surface + "m2")
         var detailStatus = EstateDetail("💵", data.status)
         simpleList = listOf(detailRoom, detailBed, detailBath, detailSurface, detailStatus)
-        recyclerViewSimple = findViewById(R.id.rvEstate)
-        recyclerViewSimple!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        recyclerViewSimple!!.adapter = simpleAdapter
 
         pictureList = listOf(data.picture)
-        recyclerViewPicture = findViewById(R.id.rvPictureEstate)
-        recyclerViewPicture!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        recyclerViewPicture!!.adapter = pictureAdapter
         initPictureAdapter()
         initSimpleAdapter()
 

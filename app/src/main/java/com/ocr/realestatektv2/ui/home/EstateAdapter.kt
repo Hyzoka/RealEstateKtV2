@@ -2,15 +2,12 @@ package com.ocr.realestatektv2.ui.home
 
 import android.app.Activity
 import android.content.Context
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.request.RequestOptions
@@ -22,7 +19,6 @@ import com.ocr.realestatektv2.model.EstateDetail
 import com.ocr.realestatektv2.ui.detail.DetailActivity
 import com.ocr.realestatektv2.util.ESTATE
 import com.ocr.realestatektv2.util.Utils.load
-import kotlinx.android.synthetic.main.estate_item_list.view.*
 import org.jetbrains.anko.startActivity
 
 
@@ -65,7 +61,6 @@ class EstateAdapter(context: Context) : RecyclerView.Adapter<EstateAdapter.Estat
             holder.priceEstate.text = "$" + estate.price
             holder.distanceEstate.text = estate.addresse
             holder.imgEstate.load(estate.picture, RequestOptions.centerCropTransform())
-
 
             holder.rvEstate.layoutManager = LinearLayoutManager(
                 holder.itemView.context,

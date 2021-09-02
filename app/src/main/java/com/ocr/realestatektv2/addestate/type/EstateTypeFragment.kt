@@ -22,7 +22,7 @@ class EstateTypeFragment  : BaseComponentFragment<EstateTypeViewModel>() {
 
         continueButton.setButtonListener {
             if (continueButton.isActive) {
-                listener.onNext()
+                listener.onNext(first_input.text.text.toString())
             }
         }
 

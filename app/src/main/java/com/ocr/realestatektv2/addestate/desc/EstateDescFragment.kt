@@ -21,7 +21,7 @@ class EstateDescFragment : BaseComponentFragment<EstateDescViewModel>() {
 
         continueDescButton.setButtonListener {
             if (continueDescButton.isActive) {
-                listener.onNext()
+                listener.onNext(inputDesc.text.text.toString())
             }
         }
 

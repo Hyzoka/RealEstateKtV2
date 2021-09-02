@@ -97,12 +97,7 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
     private fun initAdapter(){
         estateListAdapter = EstateAdapter(this)
         recyclerView.adapter = estateListAdapter
-        recyclerView.addItemDecoration(
-            DividerItemDecoration(
-                this,
-                DividerItemDecoration.HORIZONTAL
-            )
-        )
+        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL))
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     }
 }

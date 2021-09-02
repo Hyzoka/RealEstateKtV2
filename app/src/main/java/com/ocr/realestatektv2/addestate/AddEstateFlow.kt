@@ -10,30 +10,31 @@ import com.ocr.realestatektv2.addestate.address.EstateAddressFragment
 import com.ocr.realestatektv2.addestate.agent.EstateAgentFragment
 import com.ocr.realestatektv2.addestate.date.EstateDateFragment
 import com.ocr.realestatektv2.addestate.desc.EstateDescFragment
-import com.ocr.realestatektv2.addestate.picture.EstatePcitureFragment
+import com.ocr.realestatektv2.addestate.picture.EstatePictureFragment
 import com.ocr.realestatektv2.addestate.price.EstatePriceSizeFragment
 import com.ocr.realestatektv2.addestate.rooms.EstateRoomsFragment
 import com.ocr.realestatektv2.addestate.type.EstateTypeFragment
 import com.ocr.realestatektv2.base.EstateBaseActivity
-import com.ocr.realestatektv2.model.PictureEstate
+import com.ocr.realestatektv2.model.Estate
 import com.ocr.realestatektv2.ui.home.MainActivity
-import com.ocr.realestatektv2.util.DialogUtils.getDefaultPopUp
 import com.ocr.realestatektv2.util.PIX_REQUEST_CODE
+import com.ocr.realestatektv2.util.Utils.load
 import kotlinx.android.synthetic.main.activity_add_estate.*
+import kotlinx.android.synthetic.main.estate_picture_fragment.*
 import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
+@Suppress("DEPRECATION")
 class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentListener {
 
-    private var listPicture = arrayListOf<PictureEstate>()
-
     private var currentFragment: Fragment? = null
+    private var estateObject: Estate? = null
 
     private lateinit var typeFragment : EstateTypeFragment
     private lateinit var roomsFragment : EstateRoomsFragment
     private lateinit var priceSizeFragment: EstatePriceSizeFragment
     private lateinit var descFragment: EstateDescFragment
-    private lateinit var pictureFragment: EstatePcitureFragment
+    private lateinit var pictureFragment: EstatePictureFragment
     private lateinit var addressFragment: EstateAddressFragment
     private lateinit var dateFragment: EstateDateFragment
     private lateinit var agentFragment: EstateAgentFragment
@@ -82,7 +83,7 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
                 switchTitles(getString(R.string.detail_estate), getString(R.string.price_and_surface))
                 topbar.setInfoTextVisibility(true)
             }
-            is EstatePcitureFragment -> {
+            is EstatePictureFragment -> {
                 backFragment()
                 topbar.setbackButtonVisibility(true)
                 currentFragment = descFragment
@@ -113,26 +114,6 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == PIX_REQUEST_CODE) {
-
-            val returnValue = data?.getStringArrayListExtra(Pix.IMAGE_RESULTS)
-
-            if (returnValue?.first() != null) {
-                getDefaultPopUp(this){ descPicture ->
-
-                    returnValue.first()?.let { imagePath ->
-                        //var test = PictureEstate(descPicture,imagePath)
-                        //listPicture.add(test)
-                        Log.i("PICTURE_RESULT", listPicture.toString())
-                        Log.i("PICTURE_RESULT", listPicture.size.toString())
-                    }
-                }
-
-            }
-        }
-    }
 
     private fun backFragment() {
         voice.previousStep()
@@ -145,7 +126,7 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
         priceSizeFragment = EstatePriceSizeFragment.newInstance(this)
         descFragment = EstateDescFragment.newInstance(this)
         dateFragment = EstateDateFragment.newInstance(this)
-        pictureFragment = EstatePcitureFragment.newInstance(this)
+        pictureFragment = EstatePictureFragment.newInstance(this)
         addressFragment = EstateAddressFragment.newInstance(this)
         agentFragment = EstateAgentFragment.newInstance(this)
         initFragmentsFlow()
@@ -187,6 +168,9 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
         hideKeyboard()
         when (currentFragment) {
             is EstateTypeFragment -> {
+                data.let { estateType ->
+                    estateObject?.typeEstate = estateType.toString()
+                }
                 switchTitles(getString(R.string.create_estate), getString(R.string.how_much_rooms))
                 topbar.setInfoTextVisibility(true)
                 topbar.setbackButtonVisibility(true)
@@ -195,6 +179,9 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
                 showCurrentFragment()
             }
             is EstateRoomsFragment -> {
+                data.let { listRooms ->
+                    Log.i("DATA_GET",listRooms.toString())
+                }
                 topbar.setbackButtonVisibility(true)
                 topbar.setbackButtonVisibility(true)
                 switchTitles(getString(R.string.detail_estate), getString(R.string.price_and_surface))
@@ -203,6 +190,9 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
                 showCurrentFragment()
             }
             is EstatePriceSizeFragment -> {
+                data.let { listPriceSize ->
+                    Log.i("DATA_GET",listPriceSize.toString())
+                }
                 topbar.setbackButtonVisibility(true)
                 topbar.setbackButtonVisibility(true)
                 switchTitles(getString(R.string.detail_estate), getString(R.string.desc_estate))
@@ -211,12 +201,18 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
                 showCurrentFragment()
             }
             is EstateDescFragment -> {
+                data.let { desc ->
+                    Log.i("DATA_GET",desc.toString())
+                }
                 switchTitles(getString(R.string.detail_estate), getString(R.string.take_picture))
                 currentFragment = pictureFragment
                 currentFocus?.clearFocus()
                 showCurrentFragment()
             }
-            is EstatePcitureFragment -> {
+            is EstatePictureFragment -> {
+                data.let { desc ->
+                    Log.i("DATA_GET",desc.toString())
+                }
                 topbar.setbackButtonVisibility(true)
                 topbar.setbackButtonVisibility(true)
                 currentFragment = addressFragment
