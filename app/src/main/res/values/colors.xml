@@ -10,8 +10,10 @@
 
     <color name="light_black">#21212F</color>
     <color name="light_grey">#BFBFBE</color>
+    <color name="inactive_grey">#CCD1E0</color>
     <color name="gris_medium">#8f8f8f</color>
     <color name="light_withe">#F5F5F5</color>
     <color name="red">#E84F4F</color>
+    <color name="light_red">#FF6C6C</color>
     <color name="opacity_red">#61E84F4F</color>
 </resources>

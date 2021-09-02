@@ -23,9 +23,8 @@ class SimulatorActivity : BaseActivity() {
     private lateinit var editInterest: EditText
     private lateinit var textMonthly: TextView
 
-
     private var amount = 250000
-    private var apport = 20000
+    private var apport = 0
     private var taux = 0.84
     private var duration = 15
 
@@ -35,8 +34,8 @@ class SimulatorActivity : BaseActivity() {
         setContentView(R.layout.simulator_activity)
 
         textMonthly = findViewById(R.id.monthly_payment)
-        sliderDuration = findViewById(R.id.slider_duration_Loan)
-        sliderAmount = findViewById(R.id.slider_amount_Loan)
+        sliderDuration = findViewById(R.id.slider_duration_loan)
+        sliderAmount = findViewById(R.id.slider_amount_loan)
         editContribution = findViewById(R.id.contribution_edit)
         editInterest = findViewById(R.id.interest_edit)
 
@@ -100,6 +99,7 @@ class SimulatorActivity : BaseActivity() {
 
         editInterest.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
+                textMonthly.text = Utils.loanSimulator(amount, duration, taux, apport).toString()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -107,6 +107,8 @@ class SimulatorActivity : BaseActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 taux = s.toString().toDouble()
+
+
             }
         })
     }

@@ -1,0 +1,100 @@
+package com.ocr.realestatektv2.ui.detail
+
+import android.os.Bundle
+import android.util.Log
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.request.RequestOptions
+import com.mikepenz.fastadapter.IItem
+import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import com.ocr.realestatektv2.R
+import com.ocr.realestatektv2.addestate.ComponentListener
+import com.ocr.realestatektv2.base.BaseActivity
+import com.ocr.realestatektv2.base.BaseComponentFragment
+import com.ocr.realestatektv2.base.EstateBaseActivity
+import com.ocr.realestatektv2.model.Estate
+import com.ocr.realestatektv2.model.EstateDetail
+import com.ocr.realestatektv2.ui.home.DetailsItem
+import com.ocr.realestatektv2.util.ESTATE
+import com.ocr.realestatektv2.util.Utils.load
+import kotlinx.android.synthetic.main.detail_activity.*
+import org.koin.androidx.viewmodel.ext.android.getViewModel
+
+
+class DetailActivity  : EstateBaseActivity<DetailViewModel>(){
+
+    private var simpleList: List<EstateDetail>? = null
+    private val simpleAdapter = FastItemAdapter<IItem<*, *>>()
+    private var pictureList: List<String>? = null
+    private val pictureAdapter = FastItemAdapter<IItem<*, *>>()
+    private var recyclerViewSimple: RecyclerView? = null
+    private var recyclerViewPicture: RecyclerView? = null
+
+
+    override fun viewModel(): DetailViewModel {
+        return getViewModel()
+    }
+
+    override fun setupViewModel() {
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.detail_activity)
+
+        val data = intent.getIntExtra(ESTATE,2)
+        estateViewModel.estateList.observe(this,
+            Observer { estate: List<Estate> ->
+                setData(estate[data - 1])
+            })
+        setupListener()
+    }
+
+    private fun setupListener(){}
+
+    private fun setData(data: Estate){
+
+        imgEstate.load(data.picture, RequestOptions.centerCropTransform())
+        titleEstate.text = data.typeEstate
+        priceEstate.text = "$$data.price"
+        distanceEstate.text = data.addresse
+        descEstate.text = data.description
+
+        // Recycler
+        var detailRoom = EstateDetail("🏠", data.nbrRoom)
+        var detailBed = EstateDetail("🛏", data.nbrBedRoom)
+        var detailBath = EstateDetail("🛀", data.nbrBathRoom)
+        var detailSurface = EstateDetail("🔛", data.surface + "m2")
+        var detailStatus = EstateDetail("💵", data.status)
+        simpleList = listOf(detailRoom, detailBed, detailBath, detailSurface, detailStatus)
+        recyclerViewSimple = findViewById(R.id.rvEstate)
+        recyclerViewSimple!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerViewSimple!!.adapter = simpleAdapter
+
+        pictureList = listOf(data.picture)
+        recyclerViewPicture = findViewById(R.id.rvPictureEstate)
+        recyclerViewPicture!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerViewPicture!!.adapter = pictureAdapter
+        initPictureAdapter()
+        initSimpleAdapter()
+
+    }
+
+    private fun initSimpleAdapter() {
+        simpleAdapter.clear()
+        simpleAdapter.add(simpleList?.map { DetailsItem(it) })
+        simpleAdapter.notifyAdapterDataSetChanged()
+    }
+
+    private fun initPictureAdapter() {
+        pictureAdapter.clear()
+        pictureAdapter.add(pictureList?.map { PictureItem(it) })
+        pictureAdapter.notifyAdapterDataSetChanged()
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.fade_in, R.anim.slide_out_down)
+    }
+}

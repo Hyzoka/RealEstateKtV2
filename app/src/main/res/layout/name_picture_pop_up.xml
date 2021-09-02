@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/round_corner_withe_10"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp">
+
+    <TextView
+        android:id="@+id/messageTopTv"
+        android:layout_width="match_parent"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:text="Add new picture"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/messageTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:text="give a name to this picture"
+        app:layout_constraintTop_toBottomOf="@+id/messageTopTv"
+        android:fontFamily="@font/poppins_medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/black"
+        android:layout_marginEnd="20dp"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:layout_marginBottom="20dp"/>
+
+
+    <com.ocr.realestatektv2.util.component.InputText
+        android:id="@+id/inputNamePicture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:hint="Living Rooms"
+        app:layout_constraintTop_toBottomOf="@+id/messageTv"/>
+
+    <TextView
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="@string/cancel"
+        android:layout_marginTop="5dp"
+        android:textSize="18sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/round_corner_red_10"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/inputNamePicture"
+        android:textColor="@color/white"
+        android:fontFamily="@font/poppins_bold"
+        />
+
+    <TextView
+        android:id="@+id/confirm"
+        android:paddingHorizontal="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:paddingVertical="10dp"
+        android:text="@string/continue_text"
+        android:layout_marginTop="5dp"
+        android:textSize="18sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintStart_toEndOf="@+id/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/round_corner_black_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputNamePicture"
+        android:textColor="@color/white"
+        android:fontFamily="@font/poppins_bold"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

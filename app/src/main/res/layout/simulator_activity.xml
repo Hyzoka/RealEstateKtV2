@@ -39,13 +39,12 @@
         android:textSize="16sp" />
 
     <com.google.android.material.slider.Slider
-        android:id="@+id/slider_amount_Loan"
+        android:id="@+id/slider_amount_loan"
         android:layout_width="match_parent"
         app:thumbColor="@color/red"
         app:trackColorActive="@color/red"
         android:value="208000"
         android:valueFrom="0"
-        android:outlineSpotShadowColor="@color/opacity_red"
         android:stepSize="1000"
         android:valueTo="600000"
         app:trackColorInactive="@color/opacity_red"
@@ -62,12 +61,11 @@
         android:textSize="16sp" />
 
     <com.google.android.material.slider.Slider
-        android:id="@+id/slider_duration_Loan"
+        android:id="@+id/slider_duration_loan"
         android:layout_width="match_parent"
         android:valueFrom="2"
         android:valueTo="30"
         android:value="15"
-        android:outlineSpotShadowColor="@color/opacity_red"
         android:stepSize="1"
         app:thumbColor="@color/red"
         app:trackColorActive="@color/red"

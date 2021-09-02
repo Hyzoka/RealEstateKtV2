@@ -10,4 +10,24 @@
     <string name="interest_rate">Interest rates :</string>
     <string name="amount_contribution">amount of the contribution :</string>
     <string name="montly_paement">Your monthly payment will be</string>
+    <string name="check_availabilities">Check Availability</string>
+    <string name="skip">Skip</string>
+    <string name="continue_text">Continue</string>
+    <string name="type_estate">What is estate type</string>
+    <string name="nbr_rooms">"Number of rooms "</string>
+    <string name="nbr_bath_rooms">"Number of bathrooms "</string>
+    <string name="nbr_bed_rooms">"Number of bedrooms"</string>
+    <string name="type_estate_add">apartment, loft, manor</string>
+    <string name="what_estate">What estate is it?</string>
+    <string name="create_estate">Create a new estate offer</string>
+    <string name="detail_estate">detail of the property</string>
+    <string name="how_much_rooms">"How much rooms ? "</string>
+    <string name="price_and_surface">"What is the cost, with what surface ?"</string>
+    <string name="price_estate">1 000 000$</string>
+    <string name="area_of_propertie">357 m2</string>
+    <string name="desc_estate">What you can tell?</string>
+    <string name="cancel">Cancel</string>
+    <string name="desc_estate_exemple">This partially furnished modern...</string>
+    <string name="take_picture">Take a few picture</string>
+    <string name="los_angeles">Los Angeles,CA</string>
 </resources>
