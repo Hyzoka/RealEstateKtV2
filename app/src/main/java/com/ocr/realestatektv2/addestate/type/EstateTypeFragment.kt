@@ -35,7 +35,4 @@ class EstateTypeFragment  : BaseComponentFragment<EstateTypeViewModel>() {
     override fun setupViewModel() {
         first_input.hintText(getString(R.string.type_estate_add))
     }
-
-    override fun createView() {
-    }
 }

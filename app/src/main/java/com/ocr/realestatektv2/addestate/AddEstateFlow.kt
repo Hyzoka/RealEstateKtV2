@@ -243,9 +243,6 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
         voice.nextStep()
     }
 
-    override fun updateData() {
-    }
-
     private fun lastStep() {
             startActivity<MainActivity>()
         finish()

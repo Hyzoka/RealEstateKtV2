@@ -17,7 +17,6 @@ abstract class BaseComponentFragment<V: BaseComponentViewModel>() : Fragment() {
     abstract fun viewModel() : V
     lateinit var viewModel: V
     abstract fun setupView()
-    abstract fun createView()
     abstract fun setupViewModel()
 
     lateinit var estateViewModel: EstateViewModel
@@ -31,7 +30,6 @@ abstract class BaseComponentFragment<V: BaseComponentViewModel>() : Fragment() {
         mainView = inflater.inflate(layoutId(), container, false)
         viewModel = viewModel()
         initViewModel()
-        createView()
         return mainView
     }
 
@@ -42,6 +40,4 @@ abstract class BaseComponentFragment<V: BaseComponentViewModel>() : Fragment() {
     }
 
     private fun initViewModel() { estateViewModel = ViewModelProvider(this).get(EstateViewModel::class.java) }
-
-
 }

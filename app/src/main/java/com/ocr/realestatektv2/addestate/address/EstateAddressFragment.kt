@@ -33,7 +33,4 @@ class EstateAddressFragment : BaseComponentFragment<EstateAddressViewModel>() {
 
     override fun setupViewModel() {
     }
-
-    override fun createView() {
-    }
 }
