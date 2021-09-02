@@ -1,5 +1,6 @@
 package com.ocr.realestatektv2.ui.home
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,6 +23,7 @@ import com.ocr.realestatektv2.ui.detail.DetailActivity
 import com.ocr.realestatektv2.util.ESTATE
 import com.ocr.realestatektv2.util.Utils.load
 import kotlinx.android.synthetic.main.estate_item_list.view.*
+import org.jetbrains.anko.startActivity
 
 
 class EstateAdapter(context: Context) : RecyclerView.Adapter<EstateAdapter.EstateViewHolder>() {
@@ -73,21 +75,9 @@ class EstateAdapter(context: Context) : RecyclerView.Adapter<EstateAdapter.Estat
             holder.rvEstate.adapter = simpleAdapter
 
             holder.buttonCheckEstate.setOnClickListener {
-                val bundle = Bundle()
-                bundle.putInt(ESTATE, position + 1)
-                val fragobj = DetailActivity()
-                fragobj.arguments = bundle
-                fragobj.let { fragment ->
-                    val transaction = (holder.itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
-                    transaction.setCustomAnimations(
-                        R.anim.slide_in,
-                        R.anim.fade_out,
-                        R.anim.slide_in,
-                        R.anim.fade_out
-                    )
-                        .replace(R.id.details_fragment, fragment)
-                        .commit();
-                }
+                holder.itemView.context.startActivity<DetailActivity>(ESTATE to position+1)
+                (holder.itemView.context as Activity).overridePendingTransition(R.anim.slide_in, R.anim.fade_out)
+
             }
         }
     }

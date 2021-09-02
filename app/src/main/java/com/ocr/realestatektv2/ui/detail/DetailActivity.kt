@@ -1,5 +1,6 @@
 package com.ocr.realestatektv2.ui.detail
 
+import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -8,7 +9,9 @@ import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.ocr.realestatektv2.R
 import com.ocr.realestatektv2.addestate.ComponentListener
+import com.ocr.realestatektv2.base.BaseActivity
 import com.ocr.realestatektv2.base.BaseComponentFragment
+import com.ocr.realestatektv2.base.EstateBaseActivity
 import com.ocr.realestatektv2.model.Estate
 import com.ocr.realestatektv2.model.EstateDetail
 import com.ocr.realestatektv2.ui.home.DetailsItem
@@ -18,7 +21,7 @@ import kotlinx.android.synthetic.main.detail_activity.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 
-class DetailActivity  : BaseComponentFragment<DetailViewModel>(), ComponentListener{
+class DetailActivity  : EstateBaseActivity<DetailViewModel>(){
 
     private var simpleList: List<EstateDetail>? = null
     private val simpleAdapter = FastItemAdapter<IItem<*, *>>()
@@ -27,40 +30,30 @@ class DetailActivity  : BaseComponentFragment<DetailViewModel>(), ComponentListe
     private var recyclerViewSimple: RecyclerView? = null
     private var recyclerViewPicture: RecyclerView? = null
 
-    companion object {
-        fun newInstance(listener: ComponentListener) =
-            DetailActivity().apply { this.listener = listener }
-    }
 
-    override fun viewModel(): DetailViewModel {return getViewModel() }
+    override fun viewModel(): DetailViewModel {
+        return getViewModel()
+    }
 
     override fun setupViewModel() {
     }
 
-    override fun layoutId() = R.layout.detail_activity
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.detail_activity)
 
-    override fun setupView() {
-        val data = requireArguments().getInt(ESTATE)
-
+        val data = intent.getIntExtra(ESTATE,2)
         estateViewModel.estateList.observe(this,
             Observer { estate: List<Estate> ->
                 setData(estate[data - 1])
             })
         setupListener()
-
-
     }
 
-    private fun setupListener(){
-        fragment.setOnClickListener {
-            listener.updateData()
-        }
-    }
+    private fun setupListener(){}
 
     private fun setData(data: Estate){
-        Log.i("DATA_TEST", data.typeEstate)
-        Log.i("DATA_TEST", data.price)
-        Log.i("DATA_TEST", data.nbrRoom)
+
         imgEstate.load(data.picture)
         titleEstate.text = data.typeEstate
         priceEstate.text = data.price
@@ -74,9 +67,17 @@ class DetailActivity  : BaseComponentFragment<DetailViewModel>(), ComponentListe
         var detailSurface = EstateDetail("🔛", data.surface + "m2")
         var detailStatus = EstateDetail("💵", data.status)
         simpleList = listOf(detailRoom, detailBed, detailBath, detailSurface, detailStatus)
+        recyclerViewSimple = findViewById(R.id.rvEstate)
+        recyclerViewSimple!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerViewSimple!!.adapter = simpleAdapter
+
         pictureList = listOf(data.picture)
+        recyclerViewPicture = findViewById(R.id.rvPictureEstate)
+        recyclerViewPicture!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerViewPicture!!.adapter = pictureAdapter
         initPictureAdapter()
         initSimpleAdapter()
+
     }
 
     private fun initSimpleAdapter() {
@@ -91,21 +92,8 @@ class DetailActivity  : BaseComponentFragment<DetailViewModel>(), ComponentListe
         pictureAdapter.notifyAdapterDataSetChanged()
     }
 
-    override fun onNext(data: Any?) {
-    }
-
-    override fun updateData() {
-        simpleAdapter.notifyAdapterDataSetChanged()
-        pictureAdapter.notifyAdapterDataSetChanged()
-    }
-
-    override fun createView() {
-        recyclerViewSimple = mainView.findViewById(R.id.rvEstate)
-        recyclerViewSimple!!.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        recyclerViewSimple!!.adapter = simpleAdapter
-
-        recyclerViewPicture = mainView.findViewById(R.id.rvPictureEstate)
-        recyclerViewPicture!!.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        recyclerViewPicture!!.adapter = pictureAdapter
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.fade_in, R.anim.slide_out_down)
     }
 }
