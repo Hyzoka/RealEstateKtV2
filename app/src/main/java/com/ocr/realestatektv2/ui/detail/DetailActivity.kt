@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.request.RequestOptions
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.ocr.realestatektv2.R
@@ -54,9 +55,9 @@ class DetailActivity  : EstateBaseActivity<DetailViewModel>(){
 
     private fun setData(data: Estate){
 
-        imgEstate.load(data.picture)
+        imgEstate.load(data.picture, RequestOptions.centerCropTransform())
         titleEstate.text = data.typeEstate
-        priceEstate.text = data.price
+        priceEstate.text = "$$data.price"
         distanceEstate.text = data.addresse
         descEstate.text = data.description
 

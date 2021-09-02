@@ -42,7 +42,4 @@ class EstatePcitureFragment : BaseComponentFragment<EstatePictureViewModel>() {
         val options = Options.init().setRequestCode(PIX_REQUEST_CODE).setFrontfacing(true)
         Pix.start(activity, options)
     }
-
-    override fun createView() {
-    }
 }

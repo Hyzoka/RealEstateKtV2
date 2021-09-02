@@ -183,4 +183,19 @@ open class BaseActivity: AppCompatActivity(), NetworkStateReceiverListener {
         }
         return result.toString()
     }
+
+     fun getGps(address : String): LatLng {
+        var latLng = LatLng(3.852, 151.211) // <-- default values (Sydney)
+         try {
+            val geocoder = Geocoder(this, Locale.getDefault())
+            val addresses = geocoder.getFromLocationName(address, 1)
+            if (addresses.size > 0) {
+                val address = addresses[0]
+                latLng = LatLng(address.latitude,address.longitude)
+            }
+        } catch (e: IOException) {
+            Log.e("tag", e.message.toString())
+        }
+        return latLng
+    }
 }

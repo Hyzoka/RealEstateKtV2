@@ -82,9 +82,6 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
             Observer { estate: List<Estate> ->
                 estatesList = estate
                 if (estatesList.isNotEmpty()) {
-                    Log.i("DATA°INIT", estatesList[1].typeEstate)
-                    Log.i("DATA°INIT", estatesList[2].nbrRoom)
-                    Log.i("DATA°INIT", estatesList[3].picture)
                     estateListAdapter.setEstateList(estate)
                 }
             }

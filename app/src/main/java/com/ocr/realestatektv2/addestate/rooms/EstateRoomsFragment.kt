@@ -36,7 +36,4 @@ class EstateRoomsFragment  : BaseComponentFragment<EstatePriceSizeViewModel>() {
         second_input.numberKeyboard = true
         three_input.numberKeyboard = true
     }
-
-    override fun createView() {
-    }
 }
