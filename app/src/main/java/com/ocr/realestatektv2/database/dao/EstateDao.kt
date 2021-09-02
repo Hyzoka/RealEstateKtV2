@@ -10,6 +10,9 @@ interface EstateDao {
     @Query("SELECT * FROM estate")
     fun getAllEstate(): LiveData<List<Estate>>
 
+    @Query("SELECT * FROM estate WHERE id=:idEstate ")
+    fun getEstateById(vararg idEstate : Int): Estate
+
     @Query("SELECT * FROM estate WHERE id IN (:estateId)")
     fun loadAllByIds(estateId: IntArray): LiveData<List<Estate>>
 

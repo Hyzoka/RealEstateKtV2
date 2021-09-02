@@ -7,9 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/container"
-    android:background="@color/white"
+    android:background="@color/md_blue_grey_50"
     tools:context=".ui.home.MainActivity">
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:paddingHorizontal="20dp"
@@ -75,7 +74,6 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:fontFamily="@font/poppins_semi_bold"
-            android:text="Los Angeles,CA"
             android:textSize="22sp"
             app:layout_constraintStart_toEndOf="@+id/location"
             app:layout_constraintTop_toTopOf="@+id/location"

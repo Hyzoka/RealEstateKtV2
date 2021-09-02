@@ -16,10 +16,8 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 
-abstract class HeroesBaseActivity<T : BaseViewModel>: BaseActivity() {
+abstract class EstateBaseActivity<T : BaseViewModel>: BaseActivity() {
 
-    internal var conversationId: Long = 0
-    val statusBarHeight: Int = 0
     internal lateinit var viewModel: T
     abstract fun viewModel() : T
     internal var activityToStart = true

@@ -32,4 +32,7 @@ class EstateAgentFragment : BaseComponentFragment<EstateAgentViewModel>() {
 
     override fun setupViewModel() {
     }
+
+    override fun createView() {
+    }
 }

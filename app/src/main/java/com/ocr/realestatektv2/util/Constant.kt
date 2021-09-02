@@ -6,3 +6,5 @@ const val DATE_US_FORMAT = "dd.MM.yyyy"
 const val DB_NAME = "data.db"
 const val TOAST_NORMAL = 0
 const val PIX_REQUEST_CODE = 2
+const val ESTATE = "estate"
+const val ADDRESS="address"

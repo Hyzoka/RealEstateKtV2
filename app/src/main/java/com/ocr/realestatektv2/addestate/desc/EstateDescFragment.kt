@@ -32,4 +32,7 @@ class EstateDescFragment : BaseComponentFragment<EstateDescViewModel>() {
 
     override fun setupViewModel() {
     }
+
+    override fun createView() {
+    }
 }
