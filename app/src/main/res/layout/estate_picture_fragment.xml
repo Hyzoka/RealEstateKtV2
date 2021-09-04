@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
     <com.ocr.realestatektv2.util.component.PrimaryButton
         android:id="@+id/openCam"
-        app:button_text="@string/continue_text"
+        app:layout_constraintTop_toTopOf="parent"
+        app:button_text="@string/take_picture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <ImageView
-        android:id="@+id/pict"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pictRv"
+        app:layout_constraintTop_toBottomOf="@+id/openCam"
+        app:layout_constraintBottom_toTopOf="@+id/nextFrag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-</LinearLayout>
+
+    <com.ocr.realestatektv2.util.component.PrimaryButton
+        android:id="@+id/nextFrag"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:button_text="@string/continue_text"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

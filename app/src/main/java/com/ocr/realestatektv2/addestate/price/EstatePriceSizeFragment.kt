@@ -9,6 +9,9 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class EstatePriceSizeFragment  : BaseComponentFragment<EstatePriceSizeViewModel>() {
 
+    private var priceEdit : String? = null
+    private var surfaceEdit : String? = null
+
     companion object {
         fun newInstance(listener: ComponentListener) =
             EstatePriceSizeFragment().apply { this.listener = listener }
@@ -18,10 +21,13 @@ class EstatePriceSizeFragment  : BaseComponentFragment<EstatePriceSizeViewModel>
     override fun viewModel(): EstatePriceSizeViewModel { return getViewModel() }
 
     override fun setupView() {
-
+        if (priceEdit != null) {
+            first_input.text.setText(priceEdit)
+            second_input.text.setText(surfaceEdit)
+        }
         continueButton.setButtonListener {
             if (continueButton.isActive) {
-                listener.onNext()
+                listener.onNext(arrayListOf(first_input.text.text.toString(),second_input.text.text.toString()))
             }
         }
 
@@ -37,5 +43,10 @@ class EstatePriceSizeFragment  : BaseComponentFragment<EstatePriceSizeViewModel>
 
         first_input.numberKeyboard = true
         second_input.numberKeyboard = true
+    }
+
+    fun setPriceSizeEdit(priceSize : ArrayList<String>){
+        priceEdit = priceSize[0]
+        surfaceEdit = priceSize[1]
     }
 }

@@ -33,8 +33,8 @@ class MapsActivity : BaseActivity() {
                 }
                 googleMap.setOnMarkerClickListener { marker ->
                     if (marker.snippet != null){
-                    startActivity<DetailActivity>(ESTATE to marker.snippet.toInt())
-                    overridePendingTransition(R.anim.slide_in, R.anim.fade_out)}
+                        startActivity<DetailActivity>(ESTATE to marker.snippet.toInt())
+                        overridePendingTransition(R.anim.slide_in, R.anim.fade_out)}
                     else{
                         marker.title = "Your current location"
                     }

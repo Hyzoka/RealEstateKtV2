@@ -10,6 +10,9 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class EstateRoomsFragment  : BaseComponentFragment<EstatePriceSizeViewModel>() {
 
+    private var roomsEdit : String? = null
+    private var roomsBedEdit : String? = null
+    private var roomsBathEdit : String? = null
     companion object {
         fun newInstance(listener: ComponentListener) =
                 EstateRoomsFragment().apply { this.listener = listener }
@@ -19,10 +22,14 @@ class EstateRoomsFragment  : BaseComponentFragment<EstatePriceSizeViewModel>() {
     override fun viewModel(): EstatePriceSizeViewModel { return getViewModel() }
 
     override fun setupView() {
-
+        if (roomsEdit != null){
+        first_input.text.setText(roomsEdit)
+        second_input.text.setText(roomsBedEdit)
+        three_input.text.setText(roomsBathEdit)
+        }
         continueButton.setButtonListener {
             if (continueButton.isActive) {
-                listener.onNext()
+                listener.onNext(arrayListOf(first_input.text.text.toString(),second_input.text.text.toString(),three_input.text.text.toString()))
             }
         }
 
@@ -35,5 +42,11 @@ class EstateRoomsFragment  : BaseComponentFragment<EstatePriceSizeViewModel>() {
         first_input.numberKeyboard = true
         second_input.numberKeyboard = true
         three_input.numberKeyboard = true
+    }
+
+    fun setRoomsEdit(roomsList : ArrayList<String>){
+        roomsEdit = roomsList[0]
+        roomsBedEdit = roomsList[1]
+        roomsBathEdit = roomsList[2]
     }
 }
