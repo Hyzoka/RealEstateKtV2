@@ -30,4 +30,14 @@
     <string name="desc_estate_exemple">This partially furnished modern...</string>
     <string name="take_picture">Take a few picture</string>
     <string name="los_angeles">Los Angeles,CA</string>
+    <string name="what_estate_address">what is address ?</string>
+    <string name="is_on_sell">Is it for sale?</string>
+    <string name="sold">Sold</string>
+    <string name="sell">Sell</string>
+    <string name="agent_add_estate">what agent add this property?</string>
+    <string name="work">close to work</string>
+    <string name="school">close to school</string>
+    <string name="store">close to store</string>
+    <string name="parc">close to parc</string>
+    <string name="edit_estate">Edit estate offer</string>
 </resources>

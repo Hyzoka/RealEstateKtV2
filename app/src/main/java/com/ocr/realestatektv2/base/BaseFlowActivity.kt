@@ -11,6 +11,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Guideline
 import com.ocr.realestatektv2.R
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.ocr.realestatektv2.ui.home.EstateViewModel
 import org.jetbrains.anko.contentView
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -38,7 +40,6 @@ abstract class EstateBaseActivity<T : BaseViewModel>: BaseActivity() {
                 startActivity(intent)
             })
         super.onCreate(savedInstanceState)
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             if (findViewById<Guideline>(R.id.marginTop) != null) {
                 val statusBarHeight: Int

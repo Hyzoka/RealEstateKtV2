@@ -16,11 +16,11 @@ class EstateViewModel (application: Application) : AndroidViewModel(application)
     fun getEstateById(id : Int) : Estate{
         return  estateDao.getEstateById(id)
     }
-    suspend fun insert(vararg estate: Estate) {
+     fun insert(vararg estate: Estate) {
         estateDao.insert(*estate)
     }
 
-    suspend fun update(estate: Estate) {
+     fun update(estate: Estate) {
         estateDao.update(estate)
     }
 

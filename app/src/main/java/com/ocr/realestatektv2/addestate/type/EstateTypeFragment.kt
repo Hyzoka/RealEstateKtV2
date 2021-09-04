@@ -1,5 +1,6 @@
 package com.ocr.realestatektv2.addestate.type
 
+import android.util.Log
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.ocr.realestatektv2.R
 import com.ocr.realestatektv2.addestate.ComponentListener
@@ -20,9 +21,10 @@ class EstateTypeFragment  : BaseComponentFragment<EstateTypeViewModel>() {
 
     override fun setupView() {
 
+
         continueButton.setButtonListener {
             if (continueButton.isActive) {
-                listener.onNext()
+                listener.onNext(first_input.text.text.toString())
             }
         }
 
@@ -34,5 +36,9 @@ class EstateTypeFragment  : BaseComponentFragment<EstateTypeViewModel>() {
 
     override fun setupViewModel() {
         first_input.hintText(getString(R.string.type_estate_add))
+    }
+
+    fun setTypeEdit(type : String){
+        first_input.text.setText(type)
     }
 }

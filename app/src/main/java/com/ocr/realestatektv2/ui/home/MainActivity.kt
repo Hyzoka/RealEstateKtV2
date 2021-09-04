@@ -21,6 +21,7 @@ import com.ocr.realestatektv2.model.Estate
 import com.ocr.realestatektv2.ui.map.MapsActivity
 import com.ocr.realestatektv2.ui.simulator.SimulatorActivity
 import com.ocr.realestatektv2.util.ADDRESS
+import com.ocr.realestatektv2.util.ID_ESTATE
 import com.ocr.realestatektv2.util.NetworkStateReceiverListener
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
@@ -35,6 +36,7 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
     private lateinit var estateListAdapter: EstateAdapter
     private lateinit var estatesList: List<Estate>
 
+    private var sizeList = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.navigation_view)
@@ -69,7 +71,7 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_item_add -> {
-                startActivity<AddEstateFlow>()
+                startActivity<AddEstateFlow>(ID_ESTATE to sizeList)
             }
             R.id.nav_item_search -> startActivity<SimulatorActivity>()
             R.id.nav_item_maps -> startActivity<MapsActivity>()
@@ -82,7 +84,8 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
             Observer { estate: List<Estate> ->
                 estatesList = estate
                 if (estatesList.isNotEmpty()) {
-                    estateListAdapter.setEstateList(estate)
+                    sizeList = estate.size
+                    estateListAdapter.setEstateList(estate.reversed())
                 }
             }
         )
@@ -97,12 +100,7 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
     private fun initAdapter(){
         estateListAdapter = EstateAdapter(this)
         recyclerView.adapter = estateListAdapter
-        recyclerView.addItemDecoration(
-            DividerItemDecoration(
-                this,
-                DividerItemDecoration.HORIZONTAL
-            )
-        )
+        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL))
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     }
 }
