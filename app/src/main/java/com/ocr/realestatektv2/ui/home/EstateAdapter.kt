@@ -2,6 +2,7 @@ package com.ocr.realestatektv2.ui.home
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,7 +71,8 @@ class EstateAdapter(context: Context) : RecyclerView.Adapter<EstateAdapter.Estat
             holder.rvEstate.adapter = simpleAdapter
 
             holder.buttonCheckEstate.setOnClickListener {
-                holder.itemView.context.startActivity<DetailActivity>(ESTATE to position+1)
+                Log.i("ID_ADAP",estate.id.toString())
+                holder.itemView.context.startActivity<DetailActivity>(ESTATE to list[position].id)
                 (holder.itemView.context as Activity).overridePendingTransition(R.anim.slide_in, R.anim.fade_out)
 
             }

@@ -9,6 +9,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.ocr.realestatektv2.R
+import com.ocr.realestatektv2.addestate.AddEstateFlow
 import com.ocr.realestatektv2.addestate.ComponentListener
 import com.ocr.realestatektv2.base.BaseActivity
 import com.ocr.realestatektv2.base.BaseComponentFragment
@@ -16,9 +17,12 @@ import com.ocr.realestatektv2.base.EstateBaseActivity
 import com.ocr.realestatektv2.model.Estate
 import com.ocr.realestatektv2.model.EstateDetail
 import com.ocr.realestatektv2.ui.home.DetailsItem
+import com.ocr.realestatektv2.util.EDIT_ESTATE
 import com.ocr.realestatektv2.util.ESTATE
+import com.ocr.realestatektv2.util.FROM_DETAIL
 import com.ocr.realestatektv2.util.Utils.load
 import kotlinx.android.synthetic.main.detail_activity.*
+import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 
@@ -29,17 +33,24 @@ class DetailActivity  : EstateBaseActivity<DetailViewModel>(){
 
     private var pictureList: List<String>? = null
     private val pictureAdapter = FastItemAdapter<IItem<*, *>>()
-
+    private var editEstate : Int = 0
 
     override fun viewModel(): DetailViewModel {
         return getViewModel()
     }
 
     override fun setupViewModel() {
-        val data = intent.getIntExtra(ESTATE,2)
+        val data = intent.getIntExtra(ESTATE,36)
+        editEstate =  data
+
         estateViewModel.estateList.observe(this,
-            Observer { estate: List<Estate> ->
-                setData(estate[data - 1])
+
+            Observer { estateList: List<Estate> ->
+                for (estate in estateList) {
+                    if (estate.id == data){
+                        setData(estate)
+                    }
+                }
             })
     }
 
@@ -55,6 +66,10 @@ class DetailActivity  : EstateBaseActivity<DetailViewModel>(){
     private fun setupListener(){
         back.setOnClickListener {
             finish()
+        }
+
+        edit.setOnClickListener {
+            startActivity<AddEstateFlow>(EDIT_ESTATE to editEstate, FROM_DETAIL to true)
         }
     }
 

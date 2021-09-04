@@ -3,6 +3,7 @@ package com.ocr.realestatektv2.addestate.picture
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Picture
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ import com.fxn.pix.Pix
 import com.fxn.utility.PermUtil
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import com.ocr.realestatektv2.model.PictureEstate
 import com.ocr.realestatektv2.ui.detail.PictureItem
 import com.ocr.realestatektv2.util.Utils.load
 import kotlinx.android.synthetic.main.estate_picture_fragment.*
@@ -24,7 +26,7 @@ import kotlinx.android.synthetic.main.estate_picture_fragment.*
 @Suppress("DEPRECATION")
 class EstatePictureFragment : BaseComponentFragment<EstatePictureViewModel>() {
 
-    private var pictureList = arrayListOf<String>()
+    private var pictureList = arrayListOf<PictureEstate>()
     private val pictureAdapter = FastItemAdapter<IItem<*, *>>()
     companion object {
         fun newInstance(listener: ComponentListener) =
@@ -67,13 +69,17 @@ class EstatePictureFragment : BaseComponentFragment<EstatePictureViewModel>() {
             nextFrag.isActive = true
             if (returnValue?.first() != null) {
                 returnValue.first()?.let { imagePath ->
-                    pictureList.add(imagePath)
+                    pictureList.add(PictureEstate(0,"picture",imagePath))
                     pictureAdapter.clear()
-                    pictureAdapter.add(pictureList.map { PictureItem(it) })
+                    pictureAdapter.add(pictureList.map { PictureItem(it.url) })
                     setupListPicture()
                     Log.i("REQUESTOK",pictureList.toString())
                 }
             }
         }
+    }
+
+    fun setPictureEdit(pictureList : String){
+
     }
 }

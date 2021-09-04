@@ -48,7 +48,7 @@ abstract class EstateRoomDatabase : RoomDatabase() {
                                     Log.d("MoviesDatabase", "populating with data...")
                                     GlobalScope.launch(Dispatchers.IO) { rePopulateDb(INSTANCE) }
                                 }
-                            }).build()
+                            }).allowMainThreadQueries().build()
                     }
                 }
             }

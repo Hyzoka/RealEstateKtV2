@@ -9,6 +9,7 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class EstateDescFragment : BaseComponentFragment<EstateDescViewModel>() {
 
+    private var descEdit : String? = null
     companion object {
         fun newInstance(listener: ComponentListener) =
             EstateDescFragment().apply { this.listener = listener }
@@ -18,6 +19,9 @@ class EstateDescFragment : BaseComponentFragment<EstateDescViewModel>() {
     override fun viewModel(): EstateDescViewModel { return getViewModel() }
 
     override fun setupView() {
+        if (descEdit != null){
+        inputDesc.text.setText(descEdit)
+        }
 
         continueDescButton.setButtonListener {
             if (continueDescButton.isActive) {
@@ -31,5 +35,9 @@ class EstateDescFragment : BaseComponentFragment<EstateDescViewModel>() {
     }
 
     override fun setupViewModel() {
+    }
+
+    fun setDescEdit(desc : String){
+        descEdit = desc
     }
 }

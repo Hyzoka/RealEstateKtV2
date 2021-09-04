@@ -19,9 +19,9 @@ class Estate(@PrimaryKey(autoGenerate = true)
              //val picture: ArrayList<PictureEstate>,
              val picture: String,
              @ColumnInfo(name = "address") val addresse: String,
-             @ColumnInfo(name = "proximity_address") val proxyAddress: String,
+             @ColumnInfo(name = "proximity_address") val proxyAddress: String?,
              @ColumnInfo(name = "status") val status: String,
              @ColumnInfo(name = "date_create") val createDate: String,
-             @ColumnInfo(name = "date_sell") val sellDate: String,
+             @ColumnInfo(name = "date_sell") val sellDate: String?,
              @ColumnInfo(name = "manager") val manager: String,
              @ColumnInfo(name = "price") val price: String)

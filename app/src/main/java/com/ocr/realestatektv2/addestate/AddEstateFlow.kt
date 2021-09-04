@@ -1,14 +1,13 @@
 package com.ocr.realestatektv2.addestate
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
-import com.fxn.pix.Pix
+import androidx.lifecycle.Observer
 import com.ocr.realestatektv2.R
 import com.ocr.realestatektv2.addestate.address.EstateAddressFragment
 import com.ocr.realestatektv2.addestate.agent.EstateAgentFragment
-import com.ocr.realestatektv2.addestate.date.EstateDateFragment
+import com.ocr.realestatektv2.addestate.date.EstateStatusFragment
 import com.ocr.realestatektv2.addestate.desc.EstateDescFragment
 import com.ocr.realestatektv2.addestate.picture.EstatePictureFragment
 import com.ocr.realestatektv2.addestate.price.EstatePriceSizeFragment
@@ -16,19 +15,22 @@ import com.ocr.realestatektv2.addestate.rooms.EstateRoomsFragment
 import com.ocr.realestatektv2.addestate.type.EstateTypeFragment
 import com.ocr.realestatektv2.base.EstateBaseActivity
 import com.ocr.realestatektv2.model.Estate
+import com.ocr.realestatektv2.model.PictureEstate
+import com.ocr.realestatektv2.ui.detail.DetailActivity
 import com.ocr.realestatektv2.ui.home.MainActivity
-import com.ocr.realestatektv2.util.PIX_REQUEST_CODE
-import com.ocr.realestatektv2.util.Utils.load
+import com.ocr.realestatektv2.util.*
 import kotlinx.android.synthetic.main.activity_add_estate.*
-import kotlinx.android.synthetic.main.estate_picture_fragment.*
 import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.getViewModel
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import kotlin.collections.ArrayList
 
 @Suppress("DEPRECATION")
 class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentListener {
 
     private var currentFragment: Fragment? = null
-    private var estateObject: Estate? = null
 
     private lateinit var typeFragment : EstateTypeFragment
     private lateinit var roomsFragment : EstateRoomsFragment
@@ -36,8 +38,32 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
     private lateinit var descFragment: EstateDescFragment
     private lateinit var pictureFragment: EstatePictureFragment
     private lateinit var addressFragment: EstateAddressFragment
-    private lateinit var dateFragment: EstateDateFragment
+    private lateinit var statusFragment: EstateStatusFragment
     private lateinit var agentFragment: EstateAgentFragment
+
+    // for insert data in room
+    private var id = 0
+    private var type = ""
+    private var nbrRooms = ""
+    private var  nbrBedRooms= ""
+    private var nbrBathRooms = ""
+    private var price = ""
+    private var surface = ""
+    private var desc = ""
+    private var pictureArray = arrayListOf<PictureEstate>()
+    private var addresse = ""
+    private var proxyAddress = ""
+    //private var proxyAddress = arrayListOf<String>()
+    private var status = ""
+    private var dateSell : String? = null
+    private var agent = ""
+
+    //edit
+    private lateinit var editEstate : Estate
+    private var idEdit = 0
+    private var fromDetail = false
+    private var dateCreate = ""
+
 
     override fun viewModel(): AddEstateFlowViewModel {
         return getViewModel()
@@ -46,14 +72,17 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_estate)
+        getEditData()
         initFlow()
+        //create id with size estate list from mainActivity
+        id = intent.getIntExtra(ID_ESTATE, 50)
     }
 
     override fun setupViewModel() {}
 
     private fun initFlow() {
         initFragments()
-        voice.resetNumberOfSteps(7)
+        voice.resetNumberOfSteps(8)
         topbar.setBackButtonListener { onBackPressed() }
     }
 
@@ -94,21 +123,21 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
                 backFragment()
                 topbar.setbackButtonVisibility(true)
                 currentFragment = pictureFragment
-                switchTitles(getString(R.string.detail_estate), getString(R.string.desc_estate))
+                switchTitles(getString(R.string.detail_estate), getString(R.string.take_picture))
                 topbar.setInfoTextVisibility(true)
             }
-            is EstateDateFragment -> {
+            is EstateStatusFragment -> {
                 backFragment()
                 topbar.setbackButtonVisibility(true)
                 currentFragment = addressFragment
-                switchTitles(getString(R.string.detail_estate), getString(R.string.desc_estate))
+                switchTitles(getString(R.string.detail_estate), getString(R.string.what_estate_address))
                 topbar.setInfoTextVisibility(true)
             }
             is EstateAgentFragment -> {
                 backFragment()
                 topbar.setbackButtonVisibility(true)
-                currentFragment = dateFragment
-                switchTitles(getString(R.string.detail_estate), getString(R.string.desc_estate))
+                currentFragment = statusFragment
+                switchTitles(getString(R.string.detail_estate), getString(R.string.is_on_sell))
                 topbar.setInfoTextVisibility(true)
             }
         }
@@ -125,7 +154,7 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
         roomsFragment = EstateRoomsFragment.newInstance(this)
         priceSizeFragment = EstatePriceSizeFragment.newInstance(this)
         descFragment = EstateDescFragment.newInstance(this)
-        dateFragment = EstateDateFragment.newInstance(this)
+        statusFragment = EstateStatusFragment.newInstance(this)
         pictureFragment = EstatePictureFragment.newInstance(this)
         addressFragment = EstateAddressFragment.newInstance(this)
         agentFragment = EstateAgentFragment.newInstance(this)
@@ -133,10 +162,17 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
     }
 
     private fun initFragmentsFlow() {
+        if (fromDetail){
+            switchTitles(getString(R.string.edit_estate), getString(R.string.what_estate))
+            topbar.setbackButtonVisibility(false)
+            topbar.setSkipButtonVisibility(true)
+            currentFragment = typeFragment
+        }
+        else
                 switchTitles(getString(R.string.create_estate), getString(R.string.what_estate))
         topbar.setbackButtonVisibility(false)
         topbar.setSkipButtonVisibility(false)
-                currentFragment = typeFragment
+        currentFragment = typeFragment
         showCurrentFragment()
     }
 
@@ -169,7 +205,8 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
         when (currentFragment) {
             is EstateTypeFragment -> {
                 data.let { estateType ->
-                    estateObject?.typeEstate = estateType.toString()
+                    type = estateType.toString()
+                    Log.i("DATA_GET",type)
                 }
                 switchTitles(getString(R.string.create_estate), getString(R.string.how_much_rooms))
                 topbar.setInfoTextVisibility(true)
@@ -180,7 +217,11 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
             }
             is EstateRoomsFragment -> {
                 data.let { listRooms ->
-                    Log.i("DATA_GET",listRooms.toString())
+                    listRooms as ArrayList<String>
+                    nbrRooms = listRooms[0]
+                    nbrBedRooms = listRooms[1]
+                    nbrBathRooms = listRooms[2]
+                    Log.i("DATA_GET",nbrRooms + nbrBedRooms + nbrBathRooms)
                 }
                 topbar.setbackButtonVisibility(true)
                 topbar.setbackButtonVisibility(true)
@@ -191,7 +232,10 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
             }
             is EstatePriceSizeFragment -> {
                 data.let { listPriceSize ->
-                    Log.i("DATA_GET",listPriceSize.toString())
+                    listPriceSize as ArrayList<String>
+                    price = listPriceSize[0]
+                    surface = listPriceSize[1]
+                    Log.i("DATA_GET",price + surface)
                 }
                 topbar.setbackButtonVisibility(true)
                 topbar.setbackButtonVisibility(true)
@@ -201,8 +245,9 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
                 showCurrentFragment()
             }
             is EstateDescFragment -> {
-                data.let { desc ->
-                    Log.i("DATA_GET",desc.toString())
+                data.let { descript ->
+                    desc = descript.toString()
+                    Log.i("DATA_GET",desc)
                 }
                 switchTitles(getString(R.string.detail_estate), getString(R.string.take_picture))
                 currentFragment = pictureFragment
@@ -210,29 +255,52 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
                 showCurrentFragment()
             }
             is EstatePictureFragment -> {
-                data.let { desc ->
-                    Log.i("DATA_GET",desc.toString())
+                data.let { pictureList ->
+                    pictureList as ArrayList<PictureEstate>
+                    pictureArray = pictureList
+                    Log.i("DATA_GET",pictureArray.toString())
                 }
                 topbar.setbackButtonVisibility(true)
                 topbar.setbackButtonVisibility(true)
+                switchTitles(getString(R.string.detail_estate), getString(R.string.what_estate_address))
                 currentFragment = addressFragment
                 currentFocus?.clearFocus()
                 showCurrentFragment()
             }
             is EstateAddressFragment -> {
+                data.let { addressList ->
+                    addressList as ArrayList<String>
+                    addresse = addressList[0]
+                    //proxyAddress = addressList[1]
+                  //  proxyAddress = addressList.drop(0)
+                    Log.i("DATA_GET",addresse + proxyAddress)
+                }
                 topbar.setbackButtonVisibility(true)
                 topbar.setbackButtonVisibility(true)
-                currentFragment = dateFragment
+                switchTitles(getString(R.string.detail_estate), getString(R.string.is_on_sell))
+                currentFragment = statusFragment
                 currentFocus?.clearFocus()
                 showCurrentFragment()
             }
-            is EstateDateFragment -> {
+            is EstateStatusFragment -> {
+                data.let { statusList ->
+                    statusList as ArrayList<String>
+                    status = statusList[0]
+                    dateSell = statusList[1]
+                    Log.i("DATA_GET",status + dateSell)
+                }
                 topbar.setbackButtonVisibility(true)
+                topbar.setbackButtonVisibility(true)
+                switchTitles(getString(R.string.detail_estate), getString(R.string.agent_add_estate))
                 currentFragment = agentFragment
                 currentFocus?.clearFocus()
                 showCurrentFragment()
             }
             is EstateAgentFragment -> {
+                data.let { agentFrag ->
+                    agent = agentFrag.toString()
+                    Log.i("DATA_GET",agent)
+                }
                 lastStep()
             }
         }
@@ -240,7 +308,58 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
     }
 
     private fun lastStep() {
+        if (!fromDetail){
+            createEstate()
+        }
+        else{
+            editEstate()
+        }
+
             startActivity<MainActivity>()
-        finish()
+            finish()
+    }
+
+    private fun getLocalDateNow(): String{
+        return  LocalDate.now().format(DateTimeFormatter.ofPattern(DATE_US_FORMAT))
+    }
+
+    private fun createEstate(){
+        val estateObject = Estate(id+1 ,type,surface,nbrRooms,nbrBedRooms,nbrBathRooms,desc,pictureArray[0].url,addresse,proxyAddress,status,getLocalDateNow(),dateSell,agent,price)
+        estateViewModel.insert(estateObject)
+           }
+
+    private fun editEstate(){
+        val estateObject = Estate(idEdit ,type,surface,nbrRooms,nbrBedRooms,nbrBathRooms,desc,pictureArray[0].url,addresse,proxyAddress,status,dateCreate,dateSell,agent,price)
+        estateViewModel.update(estateObject)
+    }
+
+    private fun getEditData(){
+        //for edit estate
+        fromDetail = intent.getBooleanExtra(FROM_DETAIL,false)
+        if (fromDetail) {
+            val data = intent.getIntExtra(EDIT_ESTATE, 36)
+            estateViewModel.estateList.observe(this,
+
+                Observer { estateList: List<Estate> ->
+                    for (estate in estateList) {
+                        if (estate.id == data) {
+                            editEstate = estate
+                            idEdit = estate.id
+                            dateCreate = estate.createDate
+                            Log.i("EDIT_DATA",editEstate.addresse)
+                            Log.i("EDIT_DATA",editEstate.typeEstate)
+
+                            typeFragment.setTypeEdit(estate.typeEstate)
+                            roomsFragment.setRoomsEdit(arrayListOf(estate.nbrRoom,estate.nbrBedRoom,estate.nbrBathRoom))
+                            priceSizeFragment.setPriceSizeEdit(arrayListOf(estate.price,estate.surface))
+                            descFragment.setDescEdit(estate.description)
+                            pictureFragment.setPictureEdit(estate.picture)
+                            addressFragment.setAddressEdit(estate.addresse)  //estate.proxyAddress
+                            statusFragment.setStatusEdit(estate.status,estate.sellDate)
+                            agentFragment.setAgentEdit(estate.manager)
+                        }
+                    }
+                })
+        }
     }
 }

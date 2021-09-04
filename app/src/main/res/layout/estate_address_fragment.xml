@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <com.ocr.realestatektv2.util.component.InputText
+        android:id="@+id/first_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_margin="20dp"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/proxyWork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/txtWork"
+            app:layout_constraintStart_toEndOf="@+id/proxyWork"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="@+id/proxyWork"
+            app:layout_constraintBottom_toBottomOf="@+id/proxyWork"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/work"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <CheckBox
+            android:id="@+id/proxySchool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/proxyWork"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            app:layout_constraintStart_toEndOf="@+id/proxySchool"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="@+id/proxySchool"
+            app:layout_constraintBottom_toBottomOf="@+id/proxySchool"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/school"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <CheckBox
+            android:id="@+id/proxyStore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtWork"
+            android:layout_marginStart="20dp"/>
+
+        <TextView
+            app:layout_constraintStart_toEndOf="@+id/proxyStore"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="@+id/proxyStore"
+            app:layout_constraintBottom_toBottomOf="@+id/proxyStore"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/store"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <CheckBox
+            android:id="@+id/proxyParc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/proxyStore"
+            app:layout_constraintStart_toStartOf="@+id/proxyStore"
+            app:layout_constraintEnd_toEndOf="@+id/proxyStore"
+            />
+
+        <TextView
+            app:layout_constraintStart_toEndOf="@+id/proxyParc"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="@+id/proxyParc"
+            app:layout_constraintBottom_toBottomOf="@+id/proxyParc"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/parc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.ocr.realestatektv2.util.component.PrimaryButton
+        android:id="@+id/continueButton"
+        app:button_text="@string/continue_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
