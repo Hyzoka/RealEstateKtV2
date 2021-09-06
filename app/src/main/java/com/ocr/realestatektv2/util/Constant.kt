@@ -10,3 +10,4 @@ const val ESTATE = "estate"
 const val ADDRESS="address"
 const val EDIT_ESTATE = "editEstate"
 const val FROM_DETAIL = "fromDetail"
+const val FILTER_ACTIVITY_REQUEST_CODE = 654

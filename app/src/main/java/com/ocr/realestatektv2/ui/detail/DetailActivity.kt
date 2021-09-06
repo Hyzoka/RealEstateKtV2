@@ -4,18 +4,15 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.request.RequestOptions
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.ocr.realestatektv2.R
 import com.ocr.realestatektv2.addestate.AddEstateFlow
-import com.ocr.realestatektv2.addestate.ComponentListener
-import com.ocr.realestatektv2.base.BaseActivity
-import com.ocr.realestatektv2.base.BaseComponentFragment
 import com.ocr.realestatektv2.base.EstateBaseActivity
 import com.ocr.realestatektv2.model.Estate
 import com.ocr.realestatektv2.model.EstateDetail
+import com.ocr.realestatektv2.model.PictureEstate
 import com.ocr.realestatektv2.ui.home.DetailsItem
 import com.ocr.realestatektv2.util.EDIT_ESTATE
 import com.ocr.realestatektv2.util.ESTATE
@@ -25,13 +22,11 @@ import kotlinx.android.synthetic.main.detail_activity.*
 import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-
 class DetailActivity  : EstateBaseActivity<DetailViewModel>(){
 
-    private var simpleList: List<EstateDetail>? = null
+    private var simpleList = arrayListOf<EstateDetail>()
     private val simpleAdapter = FastItemAdapter<IItem<*, *>>()
 
-    private var pictureList: List<String>? = null
     private val pictureAdapter = FastItemAdapter<IItem<*, *>>()
     private var editEstate : Int = 0
 
@@ -40,6 +35,7 @@ class DetailActivity  : EstateBaseActivity<DetailViewModel>(){
     }
 
     override fun setupViewModel() {
+        initSimpleAdapter()
         val data = intent.getIntExtra(ESTATE,36)
         editEstate =  data
 
@@ -76,6 +72,8 @@ class DetailActivity  : EstateBaseActivity<DetailViewModel>(){
     private fun setupListEstate(){
         rvEstate.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rvEstate.adapter = simpleAdapter
+
+
     }
 
     private fun setupListPicture(){
@@ -85,7 +83,7 @@ class DetailActivity  : EstateBaseActivity<DetailViewModel>(){
 
     private fun setData(data: Estate){
 
-        imgEstate.load(data.picture, RequestOptions.centerCropTransform())
+        imgEstate.load(data.picture[0].url, RequestOptions.centerCropTransform())
         titleEstate.text = data.typeEstate
         priceEstate.text = "$${data.price}"
         distanceEstate.text = data.addresse
@@ -97,24 +95,25 @@ class DetailActivity  : EstateBaseActivity<DetailViewModel>(){
         var detailBath = EstateDetail("🛀", data.nbrBathRoom)
         var detailSurface = EstateDetail("🔛", data.surface + "m2")
         var detailStatus = EstateDetail("💵", data.status)
-        simpleList = listOf(detailRoom, detailBed, detailBath, detailSurface, detailStatus)
 
-        pictureList = listOf(data.picture)
+        simpleList = arrayListOf(detailRoom, detailBed, detailBath, detailSurface, detailStatus)
+        simpleAdapter.clear()
+        simpleAdapter.add(simpleList.map { DetailsItem(it) })
+        simpleAdapter.notifyAdapterDataSetChanged()
+        Log.i("PICTURE_DETAIL",data.picture.toString())
         initPictureAdapter()
-        initSimpleAdapter()
+        pictureAdapter.clear()
+        pictureAdapter.add(data.picture.map { PictureItem(it) })
+        pictureAdapter.notifyAdapterDataSetChanged()
 
     }
 
     private fun initSimpleAdapter() {
-        simpleAdapter.clear()
-        simpleAdapter.add(simpleList?.map { DetailsItem(it) })
-        simpleAdapter.notifyAdapterDataSetChanged()
+
     }
 
     private fun initPictureAdapter() {
-        pictureAdapter.clear()
-        pictureAdapter.add(pictureList?.map { PictureItem(it) })
-        pictureAdapter.notifyAdapterDataSetChanged()
+
     }
 
     override fun finish() {

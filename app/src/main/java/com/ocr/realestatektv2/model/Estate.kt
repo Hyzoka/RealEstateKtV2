@@ -5,7 +5,7 @@ import com.ocr.realestatektv2.util.Converter
 import com.ocr.realestatektv2.util.Utils
 
 @Entity(tableName = "estate")
-class Estate(@PrimaryKey(autoGenerate = true)
+data class Estate(@PrimaryKey(autoGenerate = true)
              var id: Int = 0,
 
              @ColumnInfo(name = "type") var typeEstate: String,
@@ -15,9 +15,7 @@ class Estate(@PrimaryKey(autoGenerate = true)
              @ColumnInfo(name = "number_of__bath_room") val nbrBathRoom: String,
              @ColumnInfo(name = "description") val description: String,
              @ColumnInfo(name = "pictureList")
-         //   @TypeConverters(Converter::class)
-             //val picture: ArrayList<PictureEstate>,
-             val picture: String,
+             val picture: ArrayList<PictureEstate>,
              @ColumnInfo(name = "address") val addresse: String,
              @ColumnInfo(name = "proximity_address") val proxyAddress: String?,
              @ColumnInfo(name = "status") val status: String,
@@ -25,3 +23,4 @@ class Estate(@PrimaryKey(autoGenerate = true)
              @ColumnInfo(name = "date_sell") val sellDate: String?,
              @ColumnInfo(name = "manager") val manager: String,
              @ColumnInfo(name = "price") val price: String)
+

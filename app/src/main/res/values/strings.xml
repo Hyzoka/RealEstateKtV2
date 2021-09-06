@@ -40,4 +40,16 @@
     <string name="store">close to store</string>
     <string name="parc">close to parc</string>
     <string name="edit_estate">Edit estate offer</string>
+    <string name="surface_range">Surface Range</string>
+    <string name="filter">Filter</string>
+    <string name="min">min</string>
+    <string name="max">max</string>
+    <string name="price_range">Price Range</string>
+    <string name="proxy">proximity </string>
+    <string name="close_to">Close to </string>
+    <string name="location">Locaiton</string>
+    <string name="monchecourt">Monchecourt, FR</string>
+    <string name="publish">Published before</string>
+    <string name="date">21/07/2021</string>
+    <string name="numberPicture">Minimum number of photos</string>
 </resources>

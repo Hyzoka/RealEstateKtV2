@@ -25,6 +25,16 @@ class InputText : LinearLayout {
             }
         }
 
+    var dateKeyboard : Boolean = false
+        set(value) {
+            field = value
+            if(value){
+                text.inputType = InputType.TYPE_DATETIME_VARIATION_NORMAL
+            }else{
+                text.inputType = InputType.TYPE_CLASS_TEXT
+            }
+        }
+
 
     enum class State{
         DEFAULT,

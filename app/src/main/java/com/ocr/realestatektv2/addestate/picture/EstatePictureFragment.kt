@@ -1,11 +1,15 @@
 package com.ocr.realestatektv2.addestate.picture
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Picture
+import android.text.InputType
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ocr.realestatektv2.R
@@ -28,6 +32,7 @@ class EstatePictureFragment : BaseComponentFragment<EstatePictureViewModel>() {
 
     private var pictureList = arrayListOf<PictureEstate>()
     private val pictureAdapter = FastItemAdapter<IItem<*, *>>()
+    private var imagePath = ""
     companion object {
         fun newInstance(listener: ComponentListener) =
             EstatePictureFragment().apply { this.listener = listener }
@@ -37,6 +42,12 @@ class EstatePictureFragment : BaseComponentFragment<EstatePictureViewModel>() {
     override fun viewModel(): EstatePictureViewModel { return getViewModel() }
 
     override fun setupView() {
+
+        if (pictureList.isNotEmpty()){
+            nextFrag.isActive = true
+            nextFrag.visibility = View.VISIBLE
+        }
+        initData()
         openCam.setButtonListener {
             openCam()
         }
@@ -48,7 +59,7 @@ class EstatePictureFragment : BaseComponentFragment<EstatePictureViewModel>() {
     }
 
     private fun setupListPicture() {
-        pictRv.layoutManager = LinearLayoutManager(context)
+        pictRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         pictRv.adapter = pictureAdapter
     }
 
@@ -68,18 +79,45 @@ class EstatePictureFragment : BaseComponentFragment<EstatePictureViewModel>() {
             nextFrag.visibility = View.VISIBLE
             nextFrag.isActive = true
             if (returnValue?.first() != null) {
-                returnValue.first()?.let { imagePath ->
-                    pictureList.add(PictureEstate(0,"picture",imagePath))
-                    pictureAdapter.clear()
-                    pictureAdapter.add(pictureList.map { PictureItem(it.url) })
-                    setupListPicture()
-                    Log.i("REQUESTOK",pictureList.toString())
+                returnValue.first()?.let { picture ->
+                    imagePath = picture
+                    showdialog()
                 }
             }
         }
     }
 
-    fun setPictureEdit(pictureList : String){
-
+    fun setPictureEdit(picture : ArrayList<PictureEstate>){
+        pictureList = picture
     }
+
+    private fun initData(){
+        pictureAdapter.clear()
+        pictureAdapter.add(pictureList.map { PictureItem(it) })
+        pictureAdapter.notifyAdapterDataSetChanged()
+        setupListPicture()
+    }
+
+   private fun showdialog(){
+        val builder: AlertDialog.Builder = android.app.AlertDialog.Builder(context)
+        builder.setTitle("Description")
+
+// Set up the input
+        val input = EditText(context)
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setHint("Living room")
+        input.inputType = InputType.TYPE_CLASS_TEXT
+        builder.setView(input)
+
+// Set up the buttons
+        builder.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+            // Here you get get input text from the Edittext
+            pictureList.add(PictureEstate(0,input.text.toString(),imagePath))
+            initData()
+        })
+        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
+
+        builder.show()
+    }
+
 }

@@ -1,7 +1,6 @@
 package com.ocr.realestatektv2.ui.home
 
-import android.location.Address
-import android.location.Geocoder
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -18,13 +17,16 @@ import com.ocr.realestatektv2.R
 import com.ocr.realestatektv2.addestate.AddEstateFlow
 import com.ocr.realestatektv2.base.BaseActivity
 import com.ocr.realestatektv2.model.Estate
+import com.ocr.realestatektv2.ui.home.filter.FilterActivity
 import com.ocr.realestatektv2.ui.map.MapsActivity
 import com.ocr.realestatektv2.ui.simulator.SimulatorActivity
 import com.ocr.realestatektv2.util.ADDRESS
+import com.ocr.realestatektv2.util.FILTER_ACTIVITY_REQUEST_CODE
 import com.ocr.realestatektv2.util.ID_ESTATE
 import com.ocr.realestatektv2.util.NetworkStateReceiverListener
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.startActivityForResult
 import java.util.*
 
 
@@ -58,6 +60,28 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
         imgDrawer.setOnClickListener {
             drawer.openDrawer(GravityCompat.START)
         }
+
+        filter.setOnClickListener {
+            startActivityForResult<FilterActivity>(FILTER_ACTIVITY_REQUEST_CODE)
+        }
+    }
+
+    // This method is called when the second activity finishes
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // Check that it is the SecondActivity with an OK result
+        if (requestCode == FILTER_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+
+                // Get String data from Intent
+                val returnString = data!!.getStringExtra("keyName")
+                Log.i("FILTER_RETURN",returnString.toString())
+                // Set text view with string
+                //val textView = findViewById(R.id.textView) as TextView
+                //textView.text = returnString
+            }
+        }
     }
 
     override fun networkConnectivityChanged() {
@@ -86,6 +110,7 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
                 if (estatesList.isNotEmpty()) {
                     sizeList = estate.size
                     estateListAdapter.setEstateList(estate.reversed())
+                    Log.i("PICTURE",estate.toString())
                 }
             }
         )

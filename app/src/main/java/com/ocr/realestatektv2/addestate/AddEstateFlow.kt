@@ -324,12 +324,12 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
     }
 
     private fun createEstate(){
-        val estateObject = Estate(id+1 ,type,surface,nbrRooms,nbrBedRooms,nbrBathRooms,desc,pictureArray[0].url,addresse,proxyAddress,status,getLocalDateNow(),dateSell,agent,price)
+        val estateObject = Estate(id+1 ,type,surface,nbrRooms,nbrBedRooms,nbrBathRooms,desc,pictureArray,addresse,proxyAddress,status,getLocalDateNow(),dateSell,agent,price)
         estateViewModel.insert(estateObject)
            }
 
     private fun editEstate(){
-        val estateObject = Estate(idEdit ,type,surface,nbrRooms,nbrBedRooms,nbrBathRooms,desc,pictureArray[0].url,addresse,proxyAddress,status,dateCreate,dateSell,agent,price)
+        val estateObject = Estate(idEdit ,type,surface,nbrRooms,nbrBedRooms,nbrBathRooms,desc,pictureArray,addresse,proxyAddress,status,dateCreate,dateSell,agent,price)
         estateViewModel.update(estateObject)
     }
 

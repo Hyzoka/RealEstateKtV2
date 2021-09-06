@@ -15,13 +15,11 @@ class DetailsItem(var data: EstateDetail) : KauIItem<DetailsItem, DetailsItem.Vi
     @SuppressLint("SetTextI18n")
     override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)
-
-    }
-
-    override fun unbindView(holder: ViewHolder) {
         holder.valuesEstate.text = data.values
         holder.emoji.text = data.emoji
     }
+
+    override fun unbindView(holder: ViewHolder) {}
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var valuesEstate = itemView.findViewById(R.id.valuesTV) as TextView

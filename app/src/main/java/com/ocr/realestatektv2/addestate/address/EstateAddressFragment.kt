@@ -1,6 +1,5 @@
 package com.ocr.realestatektv2.addestate.address
 
-import android.util.Log
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.ocr.realestatektv2.R
 import com.ocr.realestatektv2.addestate.ComponentListener

@@ -16,7 +16,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pictRv"
         app:layout_constraintTop_toBottomOf="@+id/openCam"
-        app:layout_constraintBottom_toTopOf="@+id/nextFrag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

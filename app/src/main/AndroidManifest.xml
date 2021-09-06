@@ -23,6 +23,9 @@
         <activity android:name=".ui.home.MainActivity"
             android:screenOrientation="portrait"
             />
+        <activity android:name=".ui.home.filter.FilterActivity"
+            android:screenOrientation="portrait"
+            />
         <activity android:name=".ui.simulator.SimulatorActivity"
             android:screenOrientation="portrait"
             />
