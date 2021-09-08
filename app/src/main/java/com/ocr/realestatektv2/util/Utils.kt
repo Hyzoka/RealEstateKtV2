@@ -129,7 +129,7 @@ object Utils {
                 val movieOne = Estate(1,"House","119","5","2","1","House renovated in 2016 of 119 m2, bright and quiet with garden and terrace, near the center and all amenities with quick access to public transport.\n" +
                         "It is composed of a fitted and equipped kitchen opening onto a large living room of more than 50 m2, a bedroom, a shower room, a laundry room and a toilet.\n" +
                         "On the first floor, you will find a landing that can be used as an office and a large bedroom with bathtub.\n" +
-                        "Possibility to make a third bedroom of several means.",pictureEstateListOne,"29 rue Voltaire, 59234 Monchecourt, France","School, store","On sale","20/08/2021","not yep","Mme Ravière","170000")
+                        "Possibility to make a third bedroom of several means.",pictureEstateListOne,"29 rue Voltaire, 59234 Monchecourt, France","School, Store","sell","20/08/2021","not yep","Mme Ravière","170000")
 
                 val movieTwo = Estate(2,"House","105","9","4","2","Nice detached house with a nice living room of more than 30m² open on a fitted kitchen, laundry room, office and a bedroom downstairs. Upstairs you will find 2 additional bedrooms and a bathroom.\n" +
                         "Outside there is a nice enclosed garden and a garage.\n" +
@@ -142,7 +142,7 @@ object Utils {
                         "-On the ground floor: a living room, a dining room, an equipped kitchen, an independent toilet, a bathroom, a games room of more than 50m ² and a bedroom.\n" +
                         "-On the 1st floor: a landing which serves 4 bedrooms\n" +
                         "-On the 2nd floor: attic space for conversion\n" +
-                        "You will also enjoy a terrace and a large garden of 1000m², as well as a double garage.",pictureEstateListThree,"6 Rue Pierre Bochu, 59234 Monchecourt, France","Work","on sale","11/08/2021","not yep","Mm Valiant","343000")
+                        "You will also enjoy a terrace and a large garden of 1000m², as well as a double garage.",pictureEstateListThree,"6 Rue Pierre Bochu, 59234 Monchecourt, France","Work","sell","11/08/2021","not yep","Mm Valiant","343000")
 
 
                 val movieFour = Estate(4,"Maison","105","6","2","1","Only at Square Habitat Aniche, superb semi detached house completely renovated. It consists of a superb living room, an open kitchen fully equipped, bathroom with shower and bath, toilet. On the first floor, you will discover two beautiful bedrooms and attic suitable for conversion into third bedrooms. To complete this superb service, a cellar, a superb terrace giving on a pretty garden, privative parking and possibility of garage. " +

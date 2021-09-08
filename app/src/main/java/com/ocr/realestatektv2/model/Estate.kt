@@ -20,7 +20,7 @@ data class Estate(@PrimaryKey(autoGenerate = true)
              @ColumnInfo(name = "proximity_address") val proxyAddress: String?,
              @ColumnInfo(name = "status") val status: String,
              @ColumnInfo(name = "date_create") val createDate: String,
-             @ColumnInfo(name = "date_sell") val sellDate: String?,
+             @ColumnInfo(name = "date_sold") val soldDate: String?,
              @ColumnInfo(name = "manager") val manager: String,
              @ColumnInfo(name = "price") val price: String)
 

@@ -28,9 +28,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.OnSuccessListener
 import com.ocr.realestatektv2.ui.home.EstateViewModel
-import com.ocr.realestatektv2.util.ADDRESS
-import com.ocr.realestatektv2.util.NetworkStateReceiverListener
-import com.ocr.realestatektv2.util.Utils
+import com.ocr.realestatektv2.util.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import java.io.IOException
@@ -147,6 +145,8 @@ open class BaseActivity: AppCompatActivity(), NetworkStateReceiverListener {
                             // Logic to handle location object
                             lastKnownLocation = location
                             sharedPreferences.edit().putString(ADDRESS, getAddress(lastKnownLocation!!.latitude,lastKnownLocation!!.longitude).toString()).apply()
+                            sharedPreferences.edit().putString(LAT, lastKnownLocation!!.latitude.toString()).apply()
+                            sharedPreferences.edit().putString(LONGITUDE,lastKnownLocation!!.longitude.toString()).apply()
                         }
                     })
     }

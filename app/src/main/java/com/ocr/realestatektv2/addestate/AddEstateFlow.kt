@@ -355,7 +355,7 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
                             descFragment.setDescEdit(estate.description)
                             pictureFragment.setPictureEdit(estate.picture)
                             addressFragment.setAddressEdit(estate.addresse)  //estate.proxyAddress
-                            statusFragment.setStatusEdit(estate.status,estate.sellDate)
+                            statusFragment.setStatusEdit(estate.status,estate.soldDate)
                             agentFragment.setAgentEdit(estate.manager)
                         }
                     }

@@ -76,11 +76,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/filterList"
+        android:paddingHorizontal="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"/>
 
     <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie"
         android:layout_width="80dp"
         android:layout_marginStart="20dp"
         app:lottie_rawRes="@raw/search_empty"

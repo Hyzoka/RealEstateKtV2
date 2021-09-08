@@ -2,9 +2,11 @@ package com.ocr.realestatektv2.ui.home.filter
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.ocr.realestatektv2.R
 import com.ocr.realestatektv2.base.BaseActivity
+import com.ocr.realestatektv2.util.*
 import kotlinx.android.synthetic.main.filter_activity.*
 import kotlinx.android.synthetic.main.filter_activity.proxyParc
 import kotlinx.android.synthetic.main.filter_activity.proxySchool
@@ -15,12 +17,14 @@ class FilterActivity : BaseActivity(){
 
     val sqlRequest = StringBuilder()
 
+    var listFilterShow = arrayListOf<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.filter_activity)
         filterButton.isActive = true
+        DateInputMask(publishEdit).listen()
+        DateInputMask(inputDateSold).listen()
         setupListener()
-
     }
 
     private fun setupListener(){
@@ -30,7 +34,6 @@ class FilterActivity : BaseActivity(){
 
         radioSold.setOnClickListener{
             inputDateSold.visibility = View.VISIBLE
-            inputDateSold.hintText("2021/01/01")
         }
 
         radioSell.setOnClickListener{
@@ -38,53 +41,75 @@ class FilterActivity : BaseActivity(){
         }
 
         filterButton.setButtonListener {
-
+            sqlRequest()
             // Put the String to pass back into an Intent and close this activity
             val intent = Intent()
-            intent.putExtra("keyName", "stringToPassBack")
+            intent.putExtra(SQL_REQUEST, sqlRequest.toString())
+            intent.putExtra(FILTER_LIST_SHOW, listFilterShow)
             setResult(RESULT_OK, intent)
             finish()
         }
     }
 
     private fun sqlRequest(){
-        sqlRequest.append("SELECT * FROM estate ")
+        sqlRequest.append("SELECT * FROM estate WHERE ")
         if(minSurface.text.isNotEmpty()){
-            sqlRequest.append("WHERE surface >= ${minSurface.text},")
+            listFilterShow.add("${minSurface.text}m2 min")
+            sqlRequest.append("surface >= ${minSurface.text} AND ")
         }
         if(maxSurface.text.isNotEmpty()){
-            sqlRequest.append("WHERE surface =< ${maxSurface.text},")
+            listFilterShow.add("${maxSurface.text}m2 max")
+            sqlRequest.append("surface < ${maxSurface.text} AND ")
         }
         if(minPrice.text.isNotEmpty()){
-            sqlRequest.append("WHERE price >= ${minPrice.text},")
+            listFilterShow.add("$${minPrice.text} min")
+            sqlRequest.append("price >= ${minPrice.text} AND ")
         }
         if(maxPrice.text.isNotEmpty()){
-            sqlRequest.append("WHERE price =< ${maxPrice.text},")
-
+            listFilterShow.add("$${maxPrice.text} max")
+            sqlRequest.append("price <= ${maxPrice.text} AND ")
+        }
+        if(publishEdit.text.isNotEmpty()){
+            listFilterShow.add("Published before ${convertForSQL(publishEdit.text.toString())}")
+            sqlRequest.append("date_create > '${convertForSQL(publishEdit.text.toString())}' AND ")
         }
         if(proxyWork.isChecked){
-            sqlRequest.append("WHERE proximity_address = work,")
+            listFilterShow.add("Close to work")
+            sqlRequest.append("proximity_address LIKE '%Work%' AND ")
         }
         if(proxySchool.isChecked){
-            sqlRequest.append("school")
+            listFilterShow.add("Close to school")
+            sqlRequest.append("proximity_address LIKE '%School%' AND ")
         }
         if(proxyStore.isChecked){
-            sqlRequest.append("store")
+            listFilterShow.add("Close to store")
+            sqlRequest.append("proximity_address LIKE '%Store%' AND ")
         }
         if(proxyParc.isChecked){
-            sqlRequest.append("parc")
+            listFilterShow.add("Close to parc")
+            sqlRequest.append("proximity_address LIKE '%Parc%' AND ")
         }
         if (radioSell.isChecked){
-            sqlRequest.append("sell")
+            listFilterShow.add("Only sell")
+            sqlRequest.append("status = 'sell' AND ")
         }
-        if (radioSold.isChecked && inputDateSold.text.text.isNotEmpty()){
+        if (radioSold.isChecked && inputDateSold.text.isNotEmpty()){
+            listFilterShow.add("Only sold before ${inputDateSold.text}")
+            sqlRequest.append("date_sold > ${convertForSQL(inputDateSold.text.toString())} AND ")
+        }
+        if(nbrPictureEdit.text.isNotEmpty()){
+            listFilterShow.add("${nbrPictureEdit.text} min pictures")
+//            sqlRequest.clear()
+//            sqlRequest.append("SELECT count(pictureList) FROM estate    ;")
+        }
 
+        if(locationEdit.text.isNotEmpty()){
+            listFilterShow.add("arround : ${locationEdit.text}")
+            sqlRequest.append("address LIKE  '%${locationEdit.text}%' AND ")
         }
     }
 
-    private fun arroundLocation(){
-        if (locationEdit.text.isNotEmpty()){
-            // get current location, compare this to edit
-            }
-        }
+    private fun convertForSQL(date : String) : String{
+        return date.replace("/","-")
+    }
 }
