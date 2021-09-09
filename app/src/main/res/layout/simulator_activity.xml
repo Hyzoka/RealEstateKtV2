@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:paddingHorizontal="20dp"
     android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="96dp"
+        android:clipToPadding="false"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="20dp"
+            android:layout_height="match_parent">
+
+
 
     <ImageView
         android:id="@+id/backButton"
@@ -38,16 +53,17 @@
         android:fontFamily="@font/poppins_medium"
         android:textSize="16sp" />
 
-    <com.google.android.material.slider.Slider
-        android:id="@+id/slider_amount_loan"
+
+    <EditText
+        android:id="@+id/amountEditText"
         android:layout_width="match_parent"
-        app:thumbColor="@color/red"
-        app:trackColorActive="@color/red"
-        android:value="208000"
-        android:valueFrom="0"
-        android:stepSize="1000"
-        android:valueTo="600000"
-        app:trackColorInactive="@color/opacity_red"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="10dp"
+        android:hint="243000"
+        android:textColorHint="@color/opacity_red"
+        android:inputType="number"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/red"
         android:layout_height="wrap_content"/>
 
 
@@ -60,16 +76,16 @@
         android:fontFamily="@font/poppins_medium"
         android:textSize="16sp" />
 
-    <com.google.android.material.slider.Slider
-        android:id="@+id/slider_duration_loan"
+    <EditText
+        android:id="@+id/durationEdit"
         android:layout_width="match_parent"
-        android:valueFrom="2"
-        android:valueTo="30"
-        android:value="15"
-        android:stepSize="1"
-        app:thumbColor="@color/red"
-        app:trackColorActive="@color/red"
-        app:trackColorInactive="@color/opacity_red"
+        android:layout_marginStart="10dp"
+        android:hint="15 ans"
+        android:layout_marginEnd="50dp"
+        android:textColorHint="@color/opacity_red"
+        android:inputType="number"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/red"
         android:layout_height="wrap_content"/>
 
 
@@ -169,8 +185,9 @@
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 
 
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

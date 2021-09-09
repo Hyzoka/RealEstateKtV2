@@ -30,18 +30,13 @@ class EstateAdapter(context: Context) : RecyclerView.Adapter<EstateAdapter.Estat
     private lateinit var estate: Estate
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
-    private val simpleAdapter = FastItemAdapter<IItem<*, *>>()
 
     fun setEstateList(movieList: List<Estate>?) {
         this.estateList = movieList
         notifyDataSetChanged()
     }
 
-    private fun initSimpleAdapter() {
-        simpleAdapter.clear()
-        simpleAdapter.add(simpleList?.map { DetailsItem(it) })
-        simpleAdapter.notifyAdapterDataSetChanged()
-    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EstateViewHolder {
         val itemView = layoutInflater.inflate(R.layout.estate_item_list, parent, false)
@@ -57,11 +52,15 @@ class EstateAdapter(context: Context) : RecyclerView.Adapter<EstateAdapter.Estat
             var detailSurface = EstateDetail("🔛", estate.surface + "m2")
             var detailStatus = EstateDetail("💵", estate.status)
             simpleList = listOf(detailRoom, detailBed, detailBath, detailSurface, detailStatus)
-            initSimpleAdapter()
+
+            val simpleAdapter = FastItemAdapter<IItem<*, *>>()
+            simpleAdapter.clear()
+            simpleAdapter.add(simpleList?.map { DetailsItem(it) })
+
             holder.titleEstate.text = estate.typeEstate
             holder.priceEstate.text = "$" + estate.price
             holder.distanceEstate.text = estate.addresse
-            holder.imgEstate.load(estate.picture, RequestOptions.centerCropTransform())
+            holder.imgEstate.load(estate.picture[0].url, RequestOptions.centerCropTransform())
 
             holder.rvEstate.layoutManager = LinearLayoutManager(
                 holder.itemView.context,
@@ -71,7 +70,6 @@ class EstateAdapter(context: Context) : RecyclerView.Adapter<EstateAdapter.Estat
             holder.rvEstate.adapter = simpleAdapter
 
             holder.buttonCheckEstate.setOnClickListener {
-                Log.i("ID_ADAP",estate.id.toString())
                 holder.itemView.context.startActivity<DetailActivity>(ESTATE to list[position].id)
                 (holder.itemView.context as Activity).overridePendingTransition(R.anim.slide_in, R.anim.fade_out)
 

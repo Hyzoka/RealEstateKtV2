@@ -271,8 +271,8 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
                 data.let { addressList ->
                     addressList as ArrayList<String>
                     addresse = addressList[0]
-                    //proxyAddress = addressList[1]
-                  //  proxyAddress = addressList.drop(0)
+                    proxyAddress = addressList[1]
+
                     Log.i("DATA_GET",addresse + proxyAddress)
                 }
                 topbar.setbackButtonVisibility(true)
@@ -324,12 +324,12 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
     }
 
     private fun createEstate(){
-        val estateObject = Estate(id+1 ,type,surface,nbrRooms,nbrBedRooms,nbrBathRooms,desc,pictureArray[0].url,addresse,proxyAddress,status,getLocalDateNow(),dateSell,agent,price)
+        val estateObject = Estate(id+1 ,type,surface,nbrRooms,nbrBedRooms,nbrBathRooms,desc,pictureArray,addresse,proxyAddress,status,getLocalDateNow(),dateSell,agent,price)
         estateViewModel.insert(estateObject)
            }
 
     private fun editEstate(){
-        val estateObject = Estate(idEdit ,type,surface,nbrRooms,nbrBedRooms,nbrBathRooms,desc,pictureArray[0].url,addresse,proxyAddress,status,dateCreate,dateSell,agent,price)
+        val estateObject = Estate(idEdit ,type,surface,nbrRooms,nbrBedRooms,nbrBathRooms,desc,pictureArray,addresse,proxyAddress,status,dateCreate,dateSell,agent,price)
         estateViewModel.update(estateObject)
     }
 
@@ -355,7 +355,7 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
                             descFragment.setDescEdit(estate.description)
                             pictureFragment.setPictureEdit(estate.picture)
                             addressFragment.setAddressEdit(estate.addresse)  //estate.proxyAddress
-                            statusFragment.setStatusEdit(estate.status,estate.sellDate)
+                            statusFragment.setStatusEdit(estate.status,estate.soldDate)
                             agentFragment.setAgentEdit(estate.manager)
                         }
                     }

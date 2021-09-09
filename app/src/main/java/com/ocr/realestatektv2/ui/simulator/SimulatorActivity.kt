@@ -13,6 +13,7 @@ import com.google.android.material.slider.Slider
 import com.ocr.realestatektv2.R
 import com.ocr.realestatektv2.base.BaseActivity
 import com.ocr.realestatektv2.util.Utils
+import kotlinx.android.synthetic.main.simulator_activity.*
 
 class SimulatorActivity : BaseActivity() {
 
@@ -34,12 +35,9 @@ class SimulatorActivity : BaseActivity() {
         setContentView(R.layout.simulator_activity)
 
         textMonthly = findViewById(R.id.monthly_payment)
-        sliderDuration = findViewById(R.id.slider_duration_loan)
-        sliderAmount = findViewById(R.id.slider_amount_loan)
         editContribution = findViewById(R.id.contribution_edit)
         editInterest = findViewById(R.id.interest_edit)
 
-        setupSlider()
         setupListener()
         textWatcher()
     }
@@ -52,38 +50,39 @@ class SimulatorActivity : BaseActivity() {
 
     }
 
-    private fun setupSlider() {
-
-        sliderDuration.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
-            override fun onStartTrackingTouch(slider: Slider) {
-                // Responds to when slider's touch event is being started
-            }
-
-            override fun onStopTrackingTouch(slider: Slider) {
-            }
-        })
-
-        sliderDuration.addOnChangeListener { slider, value, fromUser ->
-            duration = value.toInt()
-            textMonthly.text = Utils.loanSimulator(amount, duration, taux, apport).toString()
-        }
-
-        sliderAmount.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
-            override fun onStartTrackingTouch(slider: Slider) {
-                // Responds to when slider's touch event is being started
-            }
-
-            override fun onStopTrackingTouch(slider: Slider) {
-            }
-        })
-
-        sliderAmount.addOnChangeListener { slider, value, fromUser ->
-            amount = value.toInt()
-            textMonthly.text = Utils.loanSimulator(amount, duration, taux, apport).toString()
-        }
-    }
-
     private fun textWatcher(){
+
+        durationEdit.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                textMonthly.text = Utils.loanSimulator(amount, duration, taux, apport).toString()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.toString().isNotEmpty()){
+                    duration = Integer.parseInt(s.toString())
+                }
+            }
+        })
+
+
+        amountEditText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                textMonthly.text = Utils.loanSimulator(amount, duration, taux, apport).toString()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.toString().isNotEmpty()){
+                amount = Integer.parseInt(s.toString())
+                }
+            }
+        })
+
         editContribution.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 textMonthly.text = Utils.loanSimulator(amount, duration, taux, apport).toString()
@@ -93,7 +92,9 @@ class SimulatorActivity : BaseActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                apport = Integer.parseInt(s.toString())
+                if (s.toString().isNotEmpty()){
+                    apport = Integer.parseInt(s.toString())
+                }
             }
         })
 
@@ -106,8 +107,9 @@ class SimulatorActivity : BaseActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                taux = s.toString().toDouble()
-
+                if (s.toString().isNotEmpty()) {
+                    taux = s.toString().toDouble()
+                }
 
             }
         })

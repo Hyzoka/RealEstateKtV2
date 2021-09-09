@@ -1,6 +1,5 @@
 package com.ocr.realestatektv2.addestate.address
 
-import android.util.Log
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.ocr.realestatektv2.R
 import com.ocr.realestatektv2.addestate.ComponentListener
@@ -9,7 +8,7 @@ import kotlinx.android.synthetic.main.estate_address_fragment.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class EstateAddressFragment : BaseComponentFragment<EstateAddressViewModel>() {
-    private var result : ArrayList<String> = arrayListOf()
+    val result = StringBuilder()
     private var addressEdit : String? = null
 
     companion object {
@@ -29,7 +28,7 @@ class EstateAddressFragment : BaseComponentFragment<EstateAddressViewModel>() {
         continueButton.setButtonListener {
             if (continueButton.isActive) {
                 checkBox()
-                listener.onNext(arrayListOf(first_input.text.text.toString()))  // result.toString() <-- add proxy list String, object need to update to arrayList
+                listener.onNext(arrayListOf(first_input.text.text.toString(),result.toString()))  // result.toString() <-- add proxy list String, object need to update to arrayList
             }
         }
 
@@ -44,16 +43,16 @@ class EstateAddressFragment : BaseComponentFragment<EstateAddressViewModel>() {
 
     private fun checkBox(){
         if (proxyWork.isChecked) {
-            result.add("work")
+            result.append("work, ")
         }
         if (proxySchool.isChecked) {
-            result.add("school")
+            result.append("school, ")
         }
         if (proxyStore.isChecked) {
-            result.add("store")
+            result.append("store, ")
         }
         if (proxyParc.isChecked) {
-            result.add("parc")
+            result.append("parc")
         }
     }
 

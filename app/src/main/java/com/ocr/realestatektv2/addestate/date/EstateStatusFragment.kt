@@ -63,7 +63,7 @@ class EstateStatusFragment : BaseComponentFragment<EstateStatusViewModel>() {
 
     override fun setupViewModel() {
         inputDateSold.hintText("10/05/2021")
-        inputDateSold.numberKeyboard = true
+        inputDateSold.dateKeyboard = true
     }
 
     fun setStatusEdit(status : String, date : String?){

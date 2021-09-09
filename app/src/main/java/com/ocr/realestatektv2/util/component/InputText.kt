@@ -13,7 +13,6 @@ class InputText : LinearLayout {
 
 
     lateinit var text: EditText
-    private var state: InputText.State = InputText.State.DEFAULT
 
     var numberKeyboard : Boolean = false
         set(value) {
@@ -25,12 +24,16 @@ class InputText : LinearLayout {
             }
         }
 
+    var dateKeyboard : Boolean = false
+        set(value) {
+            field = value
+            if(value){
+                text.inputType = InputType.TYPE_CLASS_NUMBER
+            }else{
+                text.inputType = InputType.TYPE_CLASS_TEXT
+            }
+        }
 
-    enum class State{
-        DEFAULT,
-        FOCUSED,
-        ERROR,
-    }
 
     constructor(context: Context) : super(context) {
         init(context, null)

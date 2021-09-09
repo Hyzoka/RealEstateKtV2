@@ -10,5 +10,5 @@ class Converter {
     fun listToJson(value: ArrayList<PictureEstate>): String = Gson().toJson(value)
 
     @TypeConverter
-    fun jsonToList(value: String) = Gson().fromJson(value, Array<PictureEstate>::class.java).toList()
+    fun jsonToList(value: String) : ArrayList<PictureEstate> = ArrayList(Gson().fromJson(value, Array<PictureEstate>::class.java).toList())
 }

@@ -16,4 +16,6 @@
     <color name="red">#E84F4F</color>
     <color name="light_red">#FF6C6C</color>
     <color name="opacity_red">#61E84F4F</color>
+    <color name="transparent">#00FFFFFF</color>
+
 </resources>
