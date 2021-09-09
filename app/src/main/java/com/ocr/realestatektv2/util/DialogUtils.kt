@@ -17,8 +17,7 @@ object DialogUtils {
         val dialog = builder.create()
         dialog.setCanceledOnTouchOutside(false)
         dialog.setCancelable(false)
-
-        dialogView.cancel.setOnClickListener { dialog.dismiss() }
+        dialogView.inputNamePicture.hintText("Living room")
 
         dialogView.confirm.setOnClickListener {
             if (dialogView.inputNamePicture.isNotEmpty())

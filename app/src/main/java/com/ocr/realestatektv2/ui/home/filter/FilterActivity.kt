@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.filter_activity.proxyParc
 import kotlinx.android.synthetic.main.filter_activity.proxySchool
 import kotlinx.android.synthetic.main.filter_activity.proxyStore
 import kotlinx.android.synthetic.main.filter_activity.proxyWork
+import org.jetbrains.anko.notificationManager
 
 class FilterActivity : BaseActivity(){
 

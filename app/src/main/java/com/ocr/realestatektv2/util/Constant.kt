@@ -16,3 +16,5 @@ const val SQL_REQUEST = "sqlrequest"
 const val LONGITUDE = "longitude"
 const val LAT = "latitude"
 const val FILTER_LIST_SHOW = "filterListShow"
+const val SHOW_POP = "showPopUp"
+const val NOTIFICATION_ID = 999

@@ -1,12 +1,18 @@
 package com.ocr.realestatektv2.ui.home
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
@@ -28,6 +34,7 @@ import com.ocr.realestatektv2.ui.simulator.SimulatorActivity
 import com.ocr.realestatektv2.util.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.detail_activity.*
+import org.jetbrains.anko.notificationManager
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 import java.util.*
@@ -49,18 +56,23 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
         drawer = findViewById(R.id.drawer_layout)
         imgDrawer = findViewById(R.id.nav)
         recyclerView = findViewById(R.id.listRealEstate)
-
+        if (intent.getBooleanExtra(SHOW_POP,false)){
+            notificationManager.sendNotification(
+                    this.getText(R.string.estate_add_desc).toString(),
+                    this
+            )
+        }
         initData()
         initAdapter()
             city.text = sharedPreferences.getString(ADDRESS,"Los Angeles,CA")
         val navigationView: NavigationView = findViewById(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
-
+        createChannel(getString(R.string.estate_add_id),getString(R.string.app_name))
         setupListener()
 
     }
-
-    private fun setupListener(){
+    
+        private fun setupListener(){
         imgDrawer.setOnClickListener {
             drawer.openDrawer(GravityCompat.START)
         }
@@ -149,4 +161,32 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL))
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     }
+
+    private fun createChannel(channelId: String, channelName: String) {
+        // TODO: Step 1.6 START create a channel
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                    channelId,
+                    channelName,
+                    // TODO: Step 2.4 change importance
+                    NotificationManager.IMPORTANCE_HIGH
+            )// TODO: Step 2.6 disable badges for this channel
+                    .apply {
+                        setShowBadge(false)
+                    }
+
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.RED
+            notificationChannel.enableVibration(true)
+            notificationChannel.description = getString(R.string.estate_add)
+
+            val notificationManager = this.getSystemService(
+                    NotificationManager::class.java
+            )
+            notificationManager.createNotificationChannel(notificationChannel)
+
+        }
+        // TODO: Step 1.6 END create a channel
+    }
+
 }

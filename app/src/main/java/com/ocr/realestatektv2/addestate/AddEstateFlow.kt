@@ -315,7 +315,7 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
             editEstate()
         }
 
-            startActivity<MainActivity>()
+            startActivity<MainActivity>(SHOW_POP to true)
             finish()
     }
 
@@ -354,7 +354,7 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
                             priceSizeFragment.setPriceSizeEdit(arrayListOf(estate.price,estate.surface))
                             descFragment.setDescEdit(estate.description)
                             pictureFragment.setPictureEdit(estate.picture)
-                            addressFragment.setAddressEdit(estate.addresse)  //estate.proxyAddress
+                            addressFragment.setAddressEdit(estate.addresse)
                             statusFragment.setStatusEdit(estate.status,estate.soldDate)
                             agentFragment.setAgentEdit(estate.manager)
                         }

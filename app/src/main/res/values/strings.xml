@@ -52,4 +52,7 @@
     <string name="publish">Published before</string>
     <string name="date">21/07/2021</string>
     <string name="numberPicture">Minimum number of photos</string>
+    <string name="estate_add">You added a new Esate in list</string>
+    <string name="estate_add_id">estate_add_id</string>
+    <string name="estate_add_desc">"Noice !! your estate has been created "</string>
 </resources>
