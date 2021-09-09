@@ -24,20 +24,15 @@
             android:screenOrientation="portrait"
             />
         <activity android:name=".ui.home.filter.FilterActivity"
-            android:screenOrientation="portrait"
             />
         <activity android:name=".ui.simulator.SimulatorActivity"
-            android:screenOrientation="portrait"
             />
         <activity android:name=".ui.detail.DetailActivity"
-            android:screenOrientation="portrait"
             />
         <activity android:name=".addestate.AddEstateFlow"
-            android:screenOrientation="portrait"
             />
         <activity android:name=".ui.map.MapsActivity" />
-        <activity android:name=".ui.loading.SplashScreen"
-            android:screenOrientation="portrait">
+        <activity android:name=".ui.loading.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

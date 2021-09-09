@@ -61,7 +61,9 @@ class SimulatorActivity : BaseActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                duration = Integer.parseInt(s.toString())
+                if (s.toString().isNotEmpty()){
+                    duration = Integer.parseInt(s.toString())
+                }
             }
         })
 
@@ -105,8 +107,9 @@ class SimulatorActivity : BaseActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                taux = s.toString().toDouble()
-
+                if (s.toString().isNotEmpty()) {
+                    taux = s.toString().toDouble()
+                }
 
             }
         })

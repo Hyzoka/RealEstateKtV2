@@ -99,8 +99,7 @@ class FilterActivity : BaseActivity(){
         }
         if(nbrPictureEdit.text.isNotEmpty()){
             listFilterShow.add("${nbrPictureEdit.text} min pictures")
-//            sqlRequest.clear()
-//            sqlRequest.append("SELECT count(pictureList) FROM estate    ;")
+            sqlRequest.append(" pictureList >= ${nbrPictureEdit.text} AND ")
         }
 
         if(locationEdit.text.isNotEmpty()){

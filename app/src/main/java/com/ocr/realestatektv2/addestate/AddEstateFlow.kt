@@ -271,8 +271,8 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
                 data.let { addressList ->
                     addressList as ArrayList<String>
                     addresse = addressList[0]
-                    //proxyAddress = addressList[1]
-                  //  proxyAddress = addressList.drop(0)
+                    proxyAddress = addressList[1]
+
                     Log.i("DATA_GET",addresse + proxyAddress)
                 }
                 topbar.setbackButtonVisibility(true)

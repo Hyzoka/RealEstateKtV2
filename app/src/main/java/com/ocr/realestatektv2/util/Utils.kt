@@ -30,15 +30,16 @@ import kotlinx.coroutines.withContext
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 object Utils {
 
-    fun convertDollarToEuro(dollars: Int): Int {
-        return Math.round(dollars * 0.812).toInt()
+    fun convertDollarToEuro(dollars: Int): Double {
+        return dollars * 0.812
     }
 
-    fun convertEuroToDollar(dollars: Int): Int {
-        return Math.round(dollars * 0.812).toInt()
+    fun convertEuroToDollar(euro: Int): Double {
+        return euro * 1.18
     }
 
     fun todayDateFormatFR() : String{
@@ -76,16 +77,9 @@ object Utils {
 
     fun loanSimulator(montant : Int,duree : Int, taux : Double, apport : Int) : Int{
         val total = montant - apport
-        Log.i("TOTAL", total.toString())
         val totalWithTaux = total + addTaux(total,taux)
-        Log.i("TOTALWithTaux", totalWithTaux.toString())
-        val converMonth = convertYearToMonth(15)
-        Log.i("CONVERTMONTH", converMonth.toString())
         val perMonth = totalWithTaux/convertYearToMonth(duree)
-        Log.i("PERMONTH", perMonth.toString())
-
-        return  totalWithTaux/convertYearToMonth(duree)
-
+        return  perMonth
     }
 
     fun subscribeOnBackground(function: () -> Unit) {

@@ -31,7 +31,8 @@
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_sort_black_24"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/nav"
+            app:layout_constraintTop_toTopOf="@+id/nav"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
