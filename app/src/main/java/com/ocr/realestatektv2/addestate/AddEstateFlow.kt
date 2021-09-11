@@ -310,12 +310,13 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
     private fun lastStep() {
         if (!fromDetail){
             createEstate()
+            startActivity<MainActivity>(SHOW_POP to true)
         }
         else{
             editEstate()
+            startActivity<MainActivity>(SHOW_POP to false)
         }
 
-            startActivity<MainActivity>(SHOW_POP to true)
             finish()
     }
 

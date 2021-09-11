@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.material.navigation.NavigationView
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
@@ -26,6 +27,7 @@ import com.ocr.realestatektv2.addestate.AddEstateFlow
 import com.ocr.realestatektv2.addestate.type.EstateTypeFragment
 import com.ocr.realestatektv2.base.BaseActivity
 import com.ocr.realestatektv2.model.Estate
+import com.ocr.realestatektv2.ui.detail.PictureItem
 import com.ocr.realestatektv2.ui.home.EstateAdapter
 import com.ocr.realestatektv2.ui.home.filter.FilterActivity
 import com.ocr.realestatektv2.ui.home.filter.FilterItem
@@ -34,6 +36,7 @@ import com.ocr.realestatektv2.ui.simulator.SimulatorActivity
 import com.ocr.realestatektv2.util.*
 import kotlinx.android.synthetic.main.activity_add_estate.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.detail_activity.*
 import org.jetbrains.anko.notificationManager
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
@@ -43,15 +46,11 @@ class MainTabletActivity : BaseActivity(), NetworkStateReceiverListener, Navigat
     private lateinit var imgDrawer : ImageView
     private lateinit var recyclerView: RecyclerView
 
-
-    private var currentFragment: Fragment? = null
-
-    private lateinit var detailFragment : DetailFragmentTablet
-
     private lateinit var estateListAdapter: EstateAdapter
     private val filterAdapter = FastItemAdapter<IItem<*, *>>()
+    private val pictureAdapter = FastItemAdapter<IItem<*, *>>()
     private lateinit var estatesList: List<Estate>
-
+    private var addressMap : String? = null
     private var sizeList = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +81,16 @@ class MainTabletActivity : BaseActivity(), NetworkStateReceiverListener, Navigat
 
         filter.setOnClickListener {
             startActivityForResult<FilterActivity>(FILTER_ACTIVITY_REQUEST_CODE)
+        }
+    }
+    private val callback = OnMapReadyCallback { googleMap ->
+
+        if (addressMap != null) {
+            moveMap(googleMap, getGps(addressMap!!).latitude,getGps(addressMap!!).longitude)
+
+        }
+        else{
+            moveMap(googleMap, 34.003342, -118.485832) // <- Los Angeles location
         }
     }
 
@@ -163,6 +172,31 @@ class MainTabletActivity : BaseActivity(), NetworkStateReceiverListener, Navigat
         recyclerView.adapter = estateListAdapter
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL))
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView.addOnItemTouchListener(
+                RecyclerItemClickListener(this, recyclerView, object : RecyclerItemClickListener.OnItemClickListener {
+                    override fun onItemClick(view: View?, position: Int) {
+                        Log.i("POSITON", position.toString())
+                        surfaceEstate.text= estatesList[position+1].surface
+                        nbrRoom.text= estatesList[position+1].nbrRoom
+                        nbrbed.text= estatesList[position+1].nbrBedRoom
+                        nbrbath.text= estatesList[position+1].nbrBathRoom
+                        address.text= estatesList[position+1].addresse
+                        desc.text= estatesList[position+1].description
+
+                        addressMap = estatesList[position+1].addresse
+                        pictureAdapter.clear()
+                        pictureAdapter.add(estatesList.map { PictureItem(it.picture[position+1]) })
+                        pictureAdapter.notifyAdapterDataSetChanged()
+                        rvPicture.layoutManager = LinearLayoutManager(this@MainTabletActivity, LinearLayoutManager.HORIZONTAL, false)
+                        rvPicture.adapter = pictureAdapter
+
+                    }
+
+                    override fun onLongItemClick(view: View?, position: Int) {
+                        // do whatever
+                    }
+                })
+        )
     }
 
     private fun createChannel(channelId: String, channelName: String) {
@@ -190,37 +224,5 @@ class MainTabletActivity : BaseActivity(), NetworkStateReceiverListener, Navigat
 
         }
         // TODO: Step 1.6 END create a channel
-    }
-
-
-    // INIT DETAIL
-
-    private fun initFlow() {
-        initFragments()
-    }
-
-
-    private fun initFragments() {
-        currentFragment = detailFragment
-        showCurrentFragment()
-    }
-
-    private fun showCurrentFragment() {
-        currentFragment?.let { fragment ->
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.setCustomAnimations(
-                    R.anim.fade_in,
-                    R.anim.fade_out,
-                    R.anim.fade_in,
-                    R.anim.fade_out
-            )
-            if (!fragment.isAdded) {
-                transaction.add(R.id.fragment_content, fragment)
-                transaction.addToBackStack("")
-            } else {
-                transaction.replace(R.id.fragment_content, fragment)
-            }
-            transaction.commit()
-        }
     }
 }

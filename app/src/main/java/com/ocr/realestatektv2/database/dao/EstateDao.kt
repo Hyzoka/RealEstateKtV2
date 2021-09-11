@@ -1,5 +1,6 @@
 package com.ocr.realestatektv2.database.dao
 
+import android.database.Cursor
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteQuery
@@ -11,6 +12,10 @@ interface EstateDao {
 
     @Query("SELECT * FROM estate")
     fun getAllEstate(): LiveData<List<Estate>>
+
+    //For ContentProvider
+    @Query("SELECT * FROM estate WHERE id = :estateId")
+    fun getEstateWithCursor(estateId: Long): Cursor
 
     @RawQuery
     fun getFilterEstate(query: SupportSQLiteQuery?): List<Estate>?

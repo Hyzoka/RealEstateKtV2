@@ -19,7 +19,7 @@ class SplashScreen : AppCompatActivity() {
 
         val tabletSize = resources.getBoolean(R.bool.isTablet)
         if (tabletSize) {
-          Log.i("SCREEN", "TABLETT")
+          Log.i("SCREEN", "TABLET")
             Handler().postDelayed({
                 startActivity<MainTabletActivity>()
                 finish()

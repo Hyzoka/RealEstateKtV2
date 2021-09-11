@@ -17,11 +17,18 @@
         android:screenOrientation="portrait"
         android:theme="@style/AppTheme">
 
+        <provider
+            android:name=".database.ItemContentProvider"
+            android:authorities="com.openclassrooms.realestatemanager.provider"
+            android:exported="true" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
         <activity android:name=".ui.home.MainActivity"
+            />
+        <activity android:name=".ui.tablet.MainTabletActivity"
             />
         <activity android:name=".ui.home.filter.FilterActivity"
             />

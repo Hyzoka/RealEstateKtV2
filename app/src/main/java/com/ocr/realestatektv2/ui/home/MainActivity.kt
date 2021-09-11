@@ -2,9 +2,9 @@ package com.ocr.realestatektv2.ui.home
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +12,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.app.NotificationCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
@@ -26,7 +25,6 @@ import com.ocr.realestatektv2.R
 import com.ocr.realestatektv2.addestate.AddEstateFlow
 import com.ocr.realestatektv2.base.BaseActivity
 import com.ocr.realestatektv2.model.Estate
-import com.ocr.realestatektv2.ui.detail.PictureItem
 import com.ocr.realestatektv2.ui.home.filter.FilterActivity
 import com.ocr.realestatektv2.ui.home.filter.FilterItem
 import com.ocr.realestatektv2.ui.map.MapsActivity
@@ -56,7 +54,7 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
         drawer = findViewById(R.id.drawer_layout)
         imgDrawer = findViewById(R.id.nav)
         recyclerView = findViewById(R.id.listRealEstate)
-        if (intent.getBooleanExtra(SHOW_POP,false)){
+        if (intent.getBooleanExtra(SHOW_POP, false)){
             notificationManager.sendNotification(
                     this.getText(R.string.estate_add_desc).toString(),
                     this
@@ -64,10 +62,10 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
         }
         initData()
         initAdapter()
-            city.text = sharedPreferences.getString(ADDRESS,"Los Angeles,CA")
+            city.text = sharedPreferences.getString(ADDRESS, "Los Angeles,CA")
         val navigationView: NavigationView = findViewById(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
-        createChannel(getString(R.string.estate_add_id),getString(R.string.app_name))
+        createChannel(getString(R.string.estate_add_id), getString(R.string.app_name))
         setupListener()
 
     }
@@ -106,7 +104,7 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
 
                     estateListAdapter.setEstateList(estateViewModel.getFilterList("${sqlRequest!!.dropLast(4)};"))
 
-                    Log.i("SQL_REQUEST_0",sqlRequest?.dropLast(4).trim()+ ";")
+                    Log.i("SQL_REQUEST_0", sqlRequest?.dropLast(4).trim() + ";")
                    Log.i("SQL_REQUEST", estateViewModel.getFilterList("${sqlRequest!!.dropLast(4).trim()};").toString())
                 }
                 else{
@@ -139,20 +137,20 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
 
     private fun initData() {
         estateViewModel.estateList.observe(this,
-            Observer { estate: List<Estate> ->
-                estatesList = estate
-                if (estatesList.isNotEmpty()) {
-                    sizeList = estate.size
-                    estateListAdapter.setEstateList(estate.reversed())
-                    Log.i("ESTATE_DATA",estate.toString())
+                Observer { estate: List<Estate> ->
+                    estatesList = estate
+                    if (estatesList.isNotEmpty()) {
+                        sizeList = estate.size
+                        estateListAdapter.setEstateList(estate.reversed())
+                        Log.i("ESTATE_DATA", estate.toString())
+                    }
                 }
-            }
         )
     }
 
     override fun onResume() {
         super.onResume()
-        city.text = sharedPreferences.getString(ADDRESS,"Los Angeles,CA")
+        city.text = sharedPreferences.getString(ADDRESS, "Los Angeles,CA")
     }
 
     private fun initAdapter(){
@@ -188,5 +186,4 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
         }
         // TODO: Step 1.6 END create a channel
     }
-
 }

@@ -56,4 +56,8 @@
     <string name="estate_add_id">estate_add_id</string>
     <string name="estate_add_desc">"Noice !! your estate has been created "</string>
     <string name="reset">Reset</string>
+    <string name="media">Media</string>
+    <string name="desc">description</string>
+    <string name="surface">Surface</string>
+    <string name="address">Adresse</string>
 </resources>
