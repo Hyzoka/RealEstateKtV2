@@ -18,6 +18,7 @@ import com.ocr.realestatektv2.R
 import com.ocr.realestatektv2.model.Estate
 import com.ocr.realestatektv2.model.EstateDetail
 import com.ocr.realestatektv2.ui.detail.DetailActivity
+import com.ocr.realestatektv2.util.ADDRESS
 import com.ocr.realestatektv2.util.ESTATE
 import com.ocr.realestatektv2.util.Utils.load
 import org.jetbrains.anko.startActivity
@@ -70,7 +71,8 @@ class EstateAdapter(context: Context) : RecyclerView.Adapter<EstateAdapter.Estat
             holder.rvEstate.adapter = simpleAdapter
 
             holder.buttonCheckEstate.setOnClickListener {
-                holder.itemView.context.startActivity<DetailActivity>(ESTATE to list[position].id)
+                Log.i("ADAPTER",list[position].addresse)
+                holder.itemView.context.startActivity<DetailActivity>(ESTATE to list[position].id, ADDRESS to list[position].addresse)
                 (holder.itemView.context as Activity).overridePendingTransition(R.anim.slide_in, R.anim.fade_out)
 
             }
