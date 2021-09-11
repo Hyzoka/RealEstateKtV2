@@ -107,51 +107,51 @@ open class BaseActivity: AppCompatActivity(), NetworkStateReceiverListener {
     }
 
     /**
-     * LOCATION
-     **/
+      * LOCATION
+      **/
 
-    private fun getLocationPermission() {
+     private fun getLocationPermission() {
 
-        if (ContextCompat.checkSelfPermission(
-                this.applicationContext,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-                == PackageManager.PERMISSION_GRANTED) {
-            locationPermissionGranted = true
-        } else {
-            ActivityCompat.requestPermissions(
-                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
-            )
-        }
-    }
+         if (ContextCompat.checkSelfPermission(
+                         this.applicationContext,
+                         Manifest.permission.ACCESS_FINE_LOCATION
+                 )
+                 == PackageManager.PERMISSION_GRANTED) {
+             locationPermissionGranted = true
+         } else {
+             ActivityCompat.requestPermissions(
+                     this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+             )
+         }
+     }
 
-    private fun getCurrentLocation(){
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        }
-        fusedLocationProviderClient.lastLocation
-                .addOnSuccessListener(this,
-                    OnSuccessListener<Location?> { location ->
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            // Logic to handle location object
-                            lastKnownLocation = location
-                            sharedPreferences.edit().putString(ADDRESS, getAddress(lastKnownLocation!!.latitude,lastKnownLocation!!.longitude).toString()).apply()
-                            sharedPreferences.edit().putString(LAT, lastKnownLocation!!.latitude.toString()).apply()
-                            sharedPreferences.edit().putString(LONGITUDE,lastKnownLocation!!.longitude.toString()).apply()
-                        }
-                    })
-    }
+         private fun getCurrentLocation(){
+             if (ActivityCompat.checkSelfPermission(
+                             this,
+                             Manifest.permission.ACCESS_FINE_LOCATION
+                     ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                             this,
+                             Manifest.permission.ACCESS_COARSE_LOCATION
+                     ) != PackageManager.PERMISSION_GRANTED
+             ) {
+                 return
+             }
+             fusedLocationProviderClient.lastLocation
+                     .addOnSuccessListener(this,
+                             OnSuccessListener<Location?> { location ->
+                                 // Got last known location. In some rare situations this can be null.
+                                 if (location != null) {
+                                     // Logic to handle location object
+                                     lastKnownLocation = location
+                                     sharedPreferences.edit().putString(ADDRESS, getAddress(lastKnownLocation!!.latitude,lastKnownLocation!!.longitude).toString()).apply()
+                                     sharedPreferences.edit().putString(LAT, lastKnownLocation!!.latitude.toString()).apply()
+                                     sharedPreferences.edit().putString(LONGITUDE,lastKnownLocation!!.longitude.toString()).apply()
+                                 }
+                             })
+         }
 
-     private fun initViewModel() { estateViewModel = ViewModelProvider(this).get(EstateViewModel::class.java) }
+         private fun initViewModel() { estateViewModel = ViewModelProvider(this).get(EstateViewModel::class.java) }
 
         fun moveMap(gMap: GoogleMap, latitude: Double, longitude: Double) {
         val latlng = LatLng(latitude, longitude)

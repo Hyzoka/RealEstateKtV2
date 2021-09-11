@@ -33,6 +33,16 @@ class FilterActivity : BaseActivity(){
             finish()
         }
 
+        skipButton.setOnClickListener {
+            sqlRequest()
+            // Put the String to pass back into an Intent and close this activity
+            val intent = Intent()
+            intent.putExtra(SQL_REQUEST, sqlRequest.toString())
+            intent.putExtra(FILTER_LIST_SHOW, listFilterShow)
+            setResult(RESULT_OK, intent)
+            finish()
+        }
+
         radioSold.setOnClickListener{
             inputDateSold.visibility = View.VISIBLE
         }
