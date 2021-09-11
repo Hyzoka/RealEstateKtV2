@@ -1,8 +1,7 @@
-package com.ocr.realestatektv2.ui.home
+package com.ocr.realestatektv2.ui.tablet
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -12,9 +11,9 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.app.NotificationCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,26 +23,30 @@ import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.ocr.realestatektv2.R
 import com.ocr.realestatektv2.addestate.AddEstateFlow
+import com.ocr.realestatektv2.addestate.type.EstateTypeFragment
 import com.ocr.realestatektv2.base.BaseActivity
 import com.ocr.realestatektv2.model.Estate
-import com.ocr.realestatektv2.ui.detail.PictureItem
+import com.ocr.realestatektv2.ui.home.EstateAdapter
 import com.ocr.realestatektv2.ui.home.filter.FilterActivity
 import com.ocr.realestatektv2.ui.home.filter.FilterItem
 import com.ocr.realestatektv2.ui.map.MapsActivity
 import com.ocr.realestatektv2.ui.simulator.SimulatorActivity
 import com.ocr.realestatektv2.util.*
+import kotlinx.android.synthetic.main.activity_add_estate.*
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.detail_activity.*
 import org.jetbrains.anko.notificationManager
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
-import java.util.*
 
-
-class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationView.OnNavigationItemSelectedListener {
+class MainTabletActivity : BaseActivity(), NetworkStateReceiverListener, NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawer: DrawerLayout
     private lateinit var imgDrawer : ImageView
     private lateinit var recyclerView: RecyclerView
+
+
+    private var currentFragment: Fragment? = null
+
+    private lateinit var detailFragment : DetailFragmentTablet
 
     private lateinit var estateListAdapter: EstateAdapter
     private val filterAdapter = FastItemAdapter<IItem<*, *>>()
@@ -64,15 +67,15 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
         }
         initData()
         initAdapter()
-            city.text = sharedPreferences.getString(ADDRESS,"Los Angeles,CA")
+        city.text = sharedPreferences.getString(ADDRESS,"Los Angeles,CA")
         val navigationView: NavigationView = findViewById(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
         createChannel(getString(R.string.estate_add_id),getString(R.string.app_name))
         setupListener()
 
     }
-    
-        private fun setupListener(){
+
+    private fun setupListener(){
         imgDrawer.setOnClickListener {
             drawer.openDrawer(GravityCompat.START)
         }
@@ -94,7 +97,7 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
                 sqlRequest?.dropLast(sqlRequest.length) + ";"
                 val  listFilter = data.getStringArrayListExtra(FILTER_LIST_SHOW)
 
-                if (listFilter != null){
+                if (listFilter!!.size > 0) {
                     filterList.visibility = View.VISIBLE
                     lottie.visibility = View.GONE
                     filterList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -107,7 +110,7 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
                     estateListAdapter.setEstateList(estateViewModel.getFilterList("${sqlRequest!!.dropLast(4)};"))
 
                     Log.i("SQL_REQUEST_0",sqlRequest?.dropLast(4).trim()+ ";")
-                   Log.i("SQL_REQUEST", estateViewModel.getFilterList("${sqlRequest!!.dropLast(4).trim()};").toString())
+                    Log.i("SQL_REQUEST", estateViewModel.getFilterList("${sqlRequest!!.dropLast(4).trim()};").toString())
                 }
                 else{
                     filterList.visibility = View.GONE
@@ -139,14 +142,14 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
 
     private fun initData() {
         estateViewModel.estateList.observe(this,
-            Observer { estate: List<Estate> ->
-                estatesList = estate
-                if (estatesList.isNotEmpty()) {
-                    sizeList = estate.size
-                    estateListAdapter.setEstateList(estate.reversed())
-                    Log.i("ESTATE_DATA",estate.toString())
+                Observer { estate: List<Estate> ->
+                    estatesList = estate
+                    if (estatesList.isNotEmpty()) {
+                        sizeList = estate.size
+                        estateListAdapter.setEstateList(estate.reversed())
+                        Log.i("ESTATE_DATA",estate.toString())
+                    }
                 }
-            }
         )
     }
 
@@ -189,4 +192,35 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
         // TODO: Step 1.6 END create a channel
     }
 
+
+    // INIT DETAIL
+
+    private fun initFlow() {
+        initFragments()
+    }
+
+
+    private fun initFragments() {
+        currentFragment = detailFragment
+        showCurrentFragment()
+    }
+
+    private fun showCurrentFragment() {
+        currentFragment?.let { fragment ->
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.setCustomAnimations(
+                    R.anim.fade_in,
+                    R.anim.fade_out,
+                    R.anim.fade_in,
+                    R.anim.fade_out
+            )
+            if (!fragment.isAdded) {
+                transaction.add(R.id.fragment_content, fragment)
+                transaction.addToBackStack("")
+            } else {
+                transaction.replace(R.id.fragment_content, fragment)
+            }
+            transaction.commit()
+        }
+    }
 }
