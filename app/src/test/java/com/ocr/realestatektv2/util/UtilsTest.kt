@@ -28,12 +28,6 @@ class UtilsTest : TestCase() {
         Assert.assertEquals(LocalDate.now().format(DateTimeFormatter.ofPattern(DATE_US_FORMAT)),Utils.todayDateFormatUS())
     }
 
-    fun testIsInternetAvailable() {
-
-    }
-    fun testIsConnected() {
-        Assert.assertEquals(true,Utils.isConnected(InstrumentationRegistry.getInstrumentation().targetContext))
-    }
     fun testAddTaux() {
         //take 0.82% on 100k
         Assert.assertEquals(50,Utils.addTaux(100,50.0))

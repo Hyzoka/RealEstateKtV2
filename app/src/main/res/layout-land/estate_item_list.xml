@@ -21,26 +21,30 @@
     app:layout_constraintBottom_toBottomOf="parent"
     android:layout_height="0dp">
 
-    <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/ccEstate">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ccEstate">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="6dp"
-                    android:src="@drawable/round_corner_picture_top"/>
+        <ImageView
+            android:id="@+id/imgEstate"
+            android:src="@drawable/baseline_location_on_black_48"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
 
-                <ImageView
-                     android:id="@+id/imgEstate"
-                     android:src="@drawable/baseline_location_on_black_48"
-                     android:layout_width="match_parent"
-                     android:layout_height="match_parent"
-                    />
+        <ImageView
+            android:id="@+id/iconSold"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_sold_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-                </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

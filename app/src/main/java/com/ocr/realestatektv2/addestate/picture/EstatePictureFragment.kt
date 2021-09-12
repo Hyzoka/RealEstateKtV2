@@ -31,8 +31,11 @@ import kotlinx.android.synthetic.main.estate_picture_fragment.*
 class EstatePictureFragment : BaseComponentFragment<EstatePictureViewModel>() {
 
     private var pictureList = arrayListOf<PictureEstate>()
+    private var pictureListEdit = arrayListOf<PictureEstate>()
+    private var editPicture = false
     private val pictureAdapter = FastItemAdapter<IItem<*, *>>()
     private var imagePath = ""
+    private var firstID = 0
     companion object {
         fun newInstance(listener: ComponentListener) =
             EstatePictureFragment().apply { this.listener = listener }
@@ -42,6 +45,7 @@ class EstatePictureFragment : BaseComponentFragment<EstatePictureViewModel>() {
     override fun viewModel(): EstatePictureViewModel { return getViewModel() }
 
     override fun setupView() {
+        firstID =  estateViewModel.getIdMaxPicture()+1
 
         if (pictureList.isNotEmpty()){
             nextFrag.isActive = true
@@ -53,7 +57,12 @@ class EstatePictureFragment : BaseComponentFragment<EstatePictureViewModel>() {
         }
 
         nextFrag.setButtonListener {
+            if (editPicture){
+                listener.onNext(pictureListEdit)
+            }
+            else{
             listener.onNext(pictureList)
+            }
         }
 
     }
@@ -87,11 +96,16 @@ class EstatePictureFragment : BaseComponentFragment<EstatePictureViewModel>() {
         }
     }
 
-    fun setPictureEdit(picture : ArrayList<PictureEstate>){
-        pictureList = picture
+    fun setPictureEdit(picture : List<PictureEstate>){
+        pictureList = picture as ArrayList<PictureEstate>
+        Log.i("EDITPITURE",picture.toString())
+    }
+    fun setEditPicture(edit : Boolean){
+        editPicture = edit
     }
 
     private fun initData(){
+
         pictureAdapter.clear()
         pictureAdapter.add(pictureList.map { PictureItem(it) })
         pictureAdapter.notifyAdapterDataSetChanged()
@@ -112,7 +126,8 @@ class EstatePictureFragment : BaseComponentFragment<EstatePictureViewModel>() {
 // Set up the buttons
         builder.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
             // Here you get get input text from the Edittext
-            pictureList.add(PictureEstate(0,input.text.toString(),imagePath))
+            pictureList.add(PictureEstate(firstID + pictureList.size,1,input.text.toString(),imagePath))
+            pictureListEdit.add(PictureEstate(firstID + pictureList.size,1,input.text.toString(),imagePath))
             initData()
         })
         builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })

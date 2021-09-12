@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.request.RequestOptions
@@ -17,6 +20,7 @@ import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.ocr.realestatektv2.R
 import com.ocr.realestatektv2.model.Estate
 import com.ocr.realestatektv2.model.EstateDetail
+import com.ocr.realestatektv2.model.PictureEstate
 import com.ocr.realestatektv2.ui.detail.DetailActivity
 import com.ocr.realestatektv2.util.ADDRESS
 import com.ocr.realestatektv2.util.ESTATE
@@ -29,6 +33,7 @@ class EstateAdapter(context: Context) : RecyclerView.Adapter<EstateAdapter.Estat
     private var estateList: List<Estate>? = null
     private var simpleList: List<EstateDetail>? = null
     private lateinit var estate: Estate
+    lateinit var estateViewModel: EstateViewModel
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
@@ -45,8 +50,11 @@ class EstateAdapter(context: Context) : RecyclerView.Adapter<EstateAdapter.Estat
     }
 
     override fun onBindViewHolder(holder: EstateViewHolder, position: Int) {
+        estateViewModel = ViewModelProvider(holder.itemView.context as AppCompatActivity).get(EstateViewModel::class.java)
         estateList?.let { list ->
              estate = list[position]
+
+
             var detailRoom = EstateDetail("🏠", estate.nbrRoom)
             var detailBed = EstateDetail("🛏", estate.nbrBedRoom)
             var detailBath = EstateDetail("🛀", estate.nbrBathRoom)
@@ -54,6 +62,11 @@ class EstateAdapter(context: Context) : RecyclerView.Adapter<EstateAdapter.Estat
             var detailStatus = EstateDetail("💵", estate.status)
             simpleList = listOf(detailRoom, detailBed, detailBath, detailSurface, detailStatus)
 
+            if (estate.status.isNotEmpty()) {
+                if (estate.status == "sold") {
+                    holder.iconSold.visibility = View.VISIBLE
+                }
+            }
             val simpleAdapter = FastItemAdapter<IItem<*, *>>()
             simpleAdapter.clear()
             simpleAdapter.add(simpleList?.map { DetailsItem(it) })
@@ -61,7 +74,18 @@ class EstateAdapter(context: Context) : RecyclerView.Adapter<EstateAdapter.Estat
             holder.titleEstate.text = estate.typeEstate
             holder.priceEstate.text = "$" + estate.price
             holder.distanceEstate.text = estate.addresse
-            holder.imgEstate.load(estate.picture[0].url, RequestOptions.centerCropTransform())
+
+            estateViewModel.getPictureEstate(estate.id).observe(holder.itemView.context as AppCompatActivity,
+                    Observer { pictureList: List<PictureEstate> ->
+                        Log.i("SHOWPICTURE",pictureList.toString())
+                        holder.imgEstate.load(pictureList[0].url, RequestOptions.centerCropTransform())
+
+                    }
+            )
+
+
+
+
 
             holder.rvEstate.layoutManager = LinearLayoutManager(
                 holder.itemView.context,
@@ -94,6 +118,7 @@ class EstateAdapter(context: Context) : RecyclerView.Adapter<EstateAdapter.Estat
             val distanceEstate: TextView = itemView.findViewById(R.id.distanceEstate)
             val rvEstate: RecyclerView = itemView.findViewById(R.id.rvEstate)
             val buttonCheckEstate: LinearLayout = itemView.findViewById(R.id.buttonCheckEstate)
+            val iconSold : ImageView = itemView.findViewById(R.id.iconSold)
         }
 
     }

@@ -185,7 +185,7 @@ class MainTabletActivity : BaseActivity(), NetworkStateReceiverListener, Navigat
 
                         addressMap = estatesList[position+1].addresse
                         pictureAdapter.clear()
-                        pictureAdapter.add(estatesList.map { PictureItem(it.picture[position+1]) })
+//                        pictureAdapter.add(estatesList.map { PictureItem(it.[]) })
                         pictureAdapter.notifyAdapterDataSetChanged()
                         rvPicture.layoutManager = LinearLayoutManager(this@MainTabletActivity, LinearLayoutManager.HORIZONTAL, false)
                         rvPicture.adapter = pictureAdapter

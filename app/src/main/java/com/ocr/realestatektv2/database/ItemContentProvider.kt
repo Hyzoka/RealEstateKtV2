@@ -14,7 +14,6 @@ class ItemContentProvider  : ContentProvider() {
         val URI_PROPERTY: Uri = Uri.parse("content://$AUTHORITY/$TABLE_NAME")
     }
 
-
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
         throw IllegalStateException("RealEstateManager is read only.")
     }

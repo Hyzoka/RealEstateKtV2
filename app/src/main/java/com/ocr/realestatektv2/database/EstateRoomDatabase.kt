@@ -10,6 +10,7 @@ import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ocr.realestatektv2.database.dao.EstateDao
+import com.ocr.realestatektv2.database.dao.PictureDao
 import com.ocr.realestatektv2.model.Estate
 import com.ocr.realestatektv2.model.PictureEstate
 import com.ocr.realestatektv2.util.Converter
@@ -22,10 +23,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @Database(entities = arrayOf(Estate::class, PictureEstate::class), version = 1, exportSchema = false)
-@TypeConverters(Converter::class)
 abstract class EstateRoomDatabase : RoomDatabase() {
 
     abstract fun estateDao(): EstateDao
+    abstract fun pictureDao(): PictureDao
 
     companion object {
 

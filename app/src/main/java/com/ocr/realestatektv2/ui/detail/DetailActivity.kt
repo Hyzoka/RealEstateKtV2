@@ -2,6 +2,7 @@ package com.ocr.realestatektv2.ui.detail
 
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.request.RequestOptions
@@ -53,7 +54,6 @@ class DetailActivity  : EstateBaseActivity<DetailViewModel>(){
     }
 
     override fun setupViewModel() {
-        initSimpleAdapter()
         val data = intent.getIntExtra(ESTATE,36)
         editEstate =  data
 
@@ -103,7 +103,6 @@ class DetailActivity  : EstateBaseActivity<DetailViewModel>(){
 
     private fun setData(data: Estate){
 
-        imgEstate.load(data.picture[0].url, RequestOptions.centerCropTransform())
         titleEstate.text = data.typeEstate
         priceEstate.text = "$${data.price}"
         distanceEstate.text = data.addresse
@@ -121,19 +120,21 @@ class DetailActivity  : EstateBaseActivity<DetailViewModel>(){
         simpleAdapter.clear()
         simpleAdapter.add(simpleList.map { DetailsItem(it) })
         simpleAdapter.notifyAdapterDataSetChanged()
-        Log.i("PICTURE_DETAIL",data.picture.toString())
-        initPictureAdapter()
-        pictureAdapter.clear()
-        pictureAdapter.add(data.picture.map { PictureItem(it) })
-        pictureAdapter.notifyAdapterDataSetChanged()
 
-    }
 
-    private fun initSimpleAdapter() {
+        estateViewModel.getPictureEstate(data.id).observe(this,
+                Observer { pictureList: List<PictureEstate> ->
+                    if (pictureList.isNotEmpty()) {
+                        imgEstate.load(pictureList[0].url, RequestOptions.centerCropTransform())
+                        pictureAdapter.clear()
+                        pictureAdapter.add(pictureList.map { PictureItem(it) })
+                        pictureAdapter.notifyAdapterDataSetChanged()
 
-    }
+                    }
+                }
+        )
 
-    private fun initPictureAdapter() {
+
 
     }
 

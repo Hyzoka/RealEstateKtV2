@@ -20,8 +20,8 @@ interface EstateDao {
     @RawQuery
     fun getFilterEstate(query: SupportSQLiteQuery?): List<Estate>?
 
-    @Query("SELECT SUM(pictureList) FROM estate;")
-    fun getNumberOfPicture() : LiveData<Int>
+//    @Query("SELECT SUM(pictureList) FROM estate;")
+//    fun getNumberOfPicture() : LiveData<Int>
 
     @Query("SELECT * FROM estate WHERE id=:idEstate ")
     fun getEstateById(vararg idEstate: Int): Estate

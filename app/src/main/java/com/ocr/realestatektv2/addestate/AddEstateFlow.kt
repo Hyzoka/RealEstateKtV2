@@ -2,8 +2,10 @@ package com.ocr.realestatektv2.addestate
 
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.bumptech.glide.request.RequestOptions
 import com.ocr.realestatektv2.R
 import com.ocr.realestatektv2.addestate.address.EstateAddressFragment
 import com.ocr.realestatektv2.addestate.agent.EstateAgentFragment
@@ -19,6 +21,7 @@ import com.ocr.realestatektv2.model.PictureEstate
 import com.ocr.realestatektv2.ui.detail.DetailActivity
 import com.ocr.realestatektv2.ui.home.MainActivity
 import com.ocr.realestatektv2.util.*
+import com.ocr.realestatektv2.util.Utils.load
 import kotlinx.android.synthetic.main.activity_add_estate.*
 import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -53,7 +56,6 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
     private var pictureArray = arrayListOf<PictureEstate>()
     private var addresse = ""
     private var proxyAddress = ""
-    //private var proxyAddress = arrayListOf<String>()
     private var status = ""
     private var dateSell : String? = null
     private var agent = ""
@@ -257,6 +259,14 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
             is EstatePictureFragment -> {
                 data.let { pictureList ->
                     pictureList as ArrayList<PictureEstate>
+                    pictureList.forEach {
+                        if (fromDetail){
+                            it.estateId = idEdit
+                        }
+                        else{
+                        it.estateId = id+1
+                        }
+                    }
                     pictureArray = pictureList
                     Log.i("DATA_GET",pictureArray.toString())
                 }
@@ -325,13 +335,21 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
     }
 
     private fun createEstate(){
-        val estateObject = Estate(id+1 ,type,surface,nbrRooms,nbrBedRooms,nbrBathRooms,desc,pictureArray,addresse,proxyAddress,status,getLocalDateNow(),dateSell,agent,price)
+        val estateObject = Estate(id+1 ,type,surface,nbrRooms,nbrBedRooms,nbrBathRooms,desc,addresse,proxyAddress,status,getLocalDateNow(),dateSell,agent,price)
         estateViewModel.insert(estateObject)
+        pictureArray.forEach {
+            estateViewModel.insertPicture(it)
+        }
            }
 
     private fun editEstate(){
-        val estateObject = Estate(idEdit ,type,surface,nbrRooms,nbrBedRooms,nbrBathRooms,desc,pictureArray,addresse,proxyAddress,status,dateCreate,dateSell,agent,price)
+        val estateObject = Estate(idEdit ,type,surface,nbrRooms,nbrBedRooms,nbrBathRooms,desc,addresse,proxyAddress,status,dateCreate,dateSell,agent,price)
         estateViewModel.update(estateObject)
+        Log.i("IDVALUES",idEdit.toString())
+        pictureArray.forEach {
+            Log.i("IDVALUES",it.toString())
+            estateViewModel.insertPicture(it)
+        }
     }
 
     private fun getEditData(){
@@ -346,18 +364,22 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
                         if (estate.id == data) {
                             editEstate = estate
                             idEdit = estate.id
-                            dateCreate = estate.createDate
-                            Log.i("EDIT_DATA",editEstate.addresse)
-                            Log.i("EDIT_DATA",editEstate.typeEstate)
 
                             typeFragment.setTypeEdit(estate.typeEstate)
                             roomsFragment.setRoomsEdit(arrayListOf(estate.nbrRoom,estate.nbrBedRoom,estate.nbrBathRoom))
                             priceSizeFragment.setPriceSizeEdit(arrayListOf(estate.price,estate.surface))
                             descFragment.setDescEdit(estate.description)
-                            pictureFragment.setPictureEdit(estate.picture)
                             addressFragment.setAddressEdit(estate.addresse)
                             statusFragment.setStatusEdit(estate.status,estate.soldDate)
                             agentFragment.setAgentEdit(estate.manager)
+
+                            estateViewModel.getPictureEstate(estate.id).observe(this,
+                                    Observer { pictureList: List<PictureEstate> ->
+                                        Log.i("EDITPITURE",pictureList.toString())
+                                        pictureFragment.setPictureEdit(pictureList)
+                                        pictureFragment.setEditPicture(true)
+
+                                    })
                         }
                     }
                 })

@@ -14,8 +14,6 @@ data class Estate(@PrimaryKey(autoGenerate = true)
              @ColumnInfo(name = "number_of_bed_room") val nbrBedRoom: String,
              @ColumnInfo(name = "number_of__bath_room") val nbrBathRoom: String,
              @ColumnInfo(name = "description") val description: String,
-             @ColumnInfo(name = "pictureList")
-             val picture: ArrayList<PictureEstate>,
              @ColumnInfo(name = "address") val addresse: String,
              @ColumnInfo(name = "proximity_address") val proxyAddress: String?,
              @ColumnInfo(name = "status") val status: String,
