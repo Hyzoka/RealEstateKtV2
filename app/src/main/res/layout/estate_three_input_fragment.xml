@@ -6,6 +6,18 @@
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="96dp"
+        android:clipToPadding="false"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="20dp"
+            android:layout_height="match_parent">
 
     <com.ocr.realestatektv2.util.component.InputText
         android:id="@+id/first_input"
@@ -31,5 +43,6 @@
         app:button_text="@string/continue_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
