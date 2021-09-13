@@ -369,9 +369,10 @@ class AddEstateFlow : EstateBaseActivity<AddEstateFlowViewModel>(), ComponentLis
                             roomsFragment.setRoomsEdit(arrayListOf(estate.nbrRoom,estate.nbrBedRoom,estate.nbrBathRoom))
                             priceSizeFragment.setPriceSizeEdit(arrayListOf(estate.price,estate.surface))
                             descFragment.setDescEdit(estate.description)
-                            addressFragment.setAddressEdit(estate.addresse)
+                            addressFragment.setAddressEdit(estate.addresse,estate.proxyAddress)
                             statusFragment.setStatusEdit(estate.status,estate.soldDate)
                             agentFragment.setAgentEdit(estate.manager)
+                            Log.i("GET_CLOSE",estate.proxyAddress.toString())
 
                             estateViewModel.getPictureEstate(estate.id).observe(this,
                                     Observer { pictureList: List<PictureEstate> ->
