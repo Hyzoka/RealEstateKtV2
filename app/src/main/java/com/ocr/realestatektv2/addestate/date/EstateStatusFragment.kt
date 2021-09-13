@@ -7,7 +7,13 @@ import com.jakewharton.rxbinding3.widget.textChanges
 import com.ocr.realestatektv2.R
 import com.ocr.realestatektv2.addestate.ComponentListener
 import com.ocr.realestatektv2.base.BaseComponentFragment
+import com.ocr.realestatektv2.util.DateInputMask
 import kotlinx.android.synthetic.main.estate_date_fragment.*
+import kotlinx.android.synthetic.main.estate_date_fragment.inputDateSold
+import kotlinx.android.synthetic.main.estate_date_fragment.radioEstate
+import kotlinx.android.synthetic.main.estate_date_fragment.radioSell
+import kotlinx.android.synthetic.main.estate_date_fragment.radioSold
+import kotlinx.android.synthetic.main.filter_activity.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class EstateStatusFragment : BaseComponentFragment<EstateStatusViewModel>() {
@@ -25,7 +31,8 @@ class EstateStatusFragment : BaseComponentFragment<EstateStatusViewModel>() {
     override fun viewModel(): EstateStatusViewModel { return getViewModel() }
 
     override fun setupView() {
-                if (statusEdit != null) {
+        DateInputMask(inputDateSold.text).listen()
+        if (statusEdit != null) {
                     if (statusEdit == "sell") {
                         radioEstate.check(R.id.radioSell)
                     } else{

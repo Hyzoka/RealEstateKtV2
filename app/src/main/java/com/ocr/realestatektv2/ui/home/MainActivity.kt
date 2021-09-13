@@ -45,8 +45,9 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
 
     private lateinit var estateListAdapter: EstateAdapter
     private val filterAdapter = FastItemAdapter<IItem<*, *>>()
+    private val pictureAdapter = FastItemAdapter<IItem<*, *>>()
     private lateinit var estatesList: List<Estate>
-
+    private var addressMap : String? = null
     private var sizeList = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -158,6 +159,37 @@ class MainActivity : BaseActivity(), NetworkStateReceiverListener, NavigationVie
         recyclerView.adapter = estateListAdapter
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL))
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+    }
+
+    private fun initAdapterTablet(){
+        estateListAdapter = EstateAdapter(this)
+        recyclerView.adapter = estateListAdapter
+        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL))
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView.addOnItemTouchListener(
+                RecyclerItemClickListener(this, recyclerView, object : RecyclerItemClickListener.OnItemClickListener {
+                    override fun onItemClick(view: View?, position: Int) {
+                        Log.i("POSITON", position.toString())
+                        surfaceEstate.text= estatesList[position+1].surface
+                        nbrRoom.text= estatesList[position+1].nbrRoom
+                        nbrbed.text= estatesList[position+1].nbrBedRoom
+                        nbrbath.text= estatesList[position+1].nbrBathRoom
+                        address.text= estatesList[position+1].addresse
+                        desc.text= estatesList[position+1].description
+
+                        addressMap = estatesList[position+1].addresse
+                        pictureAdapter.clear()
+                        pictureAdapter.notifyAdapterDataSetChanged()
+                        rvPicture.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
+                        rvPicture.adapter = pictureAdapter
+
+                    }
+
+                    override fun onLongItemClick(view: View?, position: Int) {
+                        // do whatever
+                    }
+                })
+        )
     }
 
     private fun createChannel(channelId: String, channelName: String) {
