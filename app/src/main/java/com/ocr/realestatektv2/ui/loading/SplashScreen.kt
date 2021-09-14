@@ -2,12 +2,10 @@ package com.ocr.realestatektv2.ui.loading
 
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.ocr.realestatektv2.R
 import com.ocr.realestatektv2.ui.home.MainActivity
-import com.ocr.realestatektv2.ui.tablet.MainTabletActivity
 import org.jetbrains.anko.startActivity
 
 

@@ -28,8 +28,7 @@
 
         <activity android:name=".ui.home.MainActivity"
             />
-        <activity android:name=".ui.tablet.MainTabletActivity"
-            />
+
         <activity android:name=".ui.home.filter.FilterActivity"
             />
         <activity android:name=".ui.simulator.SimulatorActivity"
